@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>Create</h2>
+    <form action="{{ url_for('create') }}" method=post>
+      <input type="text" name="name" size=10 />
+      <select id="theme" name="theme">
+      {% for theme in themes %}
+        <option value="{{ theme }}">{{ theme }}</option>
+      {% endfor %}
+      </select>
+      <input type="submit" value="Create" />
+    </form>
+{% endblock main %}

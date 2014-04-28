@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>Are you sure to delete the presentation {{ presentation }}?</h2>
+  <form action="{{ url_for('delete', presentation=presentation) }}" method=post>
+    <label for="yes">Yes</label><input type="radio" name="validation" id="yes" value="yes"/>
+    <label for="no">No</label><input type="radio" name="validation" id="no" value="no"/>
+    <input type="submit" value="OK" />
+  </form>
+{% endblock main %}
+
