@@ -237,7 +237,86 @@ def export(presentation):
     archive = shutil.make_archive(presentation, 'zip', dir_temp)
     shutil.rmtree(dir_temp)
     return send_file(archive)
+
+@app.route('/edit/<presentation>', methods=['GET'])
+def edit(presentation):
+    """Edit a presentation."""
+    presentation_path = os.path.join(
+        app.config.root_path, 'presentations', presentation)
+
+    meta, meta_theme = parser_theme(presentation)
     
+    themes = os.path.join(app.config.root_path, 'themes')
+    theme = os.path.join(themes, meta_theme)
+        
+    with open(os.path.join(presentation_path, 'presentation.html'), 'r') as fd:
+        presentation_text = fd.read()
+        
+        
+    with open('static/editor.html', 'r') as fd:
+        wysiwyg = fd.read()
+    
+    for path in (presentation_path, theme, themes):
+        if os.path.exists(os.path.join(path, 'layout.html')):
+            with open(os.path.join(path, 'layout.html'), 'r') as fd:
+                layout = fd.read()
+            break
+    
+    if os.path.exists(os.path.join(presentation_path, 'reveal.js')):
+        route = 'presentations_path'
+        path = presentation
+    else:
+        route = 'themes_path'
+        path = (
+            meta_theme if os.path.exists(os.path.join(theme, 'reveal.js'))
+            else '.')
+    reveal_path = url_for(route, path=os.path.join(path, 'reveal.js'))
+    stylesheets = [
+        url_for(route, path=os.path.join(
+            path, 'reveal.js', 'css', 'reveal.min.css')),
+        url_for(route, path=os.path.join(
+            path, 'reveal.js', 'lib', 'css', 'zenburn.css'))]
+    scripts = [
+        url_for(route, path=os.path.join(
+            path, 'reveal.js', 'lib', 'js', 'head.min.js')),
+        url_for(route, path=os.path.join(
+            path, 'reveal.js', 'js', 'reveal.min.js'))]
+    
+    if os.path.exists(os.path.join(presentation_path, 'style.css')):
+        stylesheets.append(url_for('presentations_path', path=os.path.join(
+            presentation, 'style.css')))
+    elif os.path.exists(os.path.join(theme, 'style.css')):
+        stylesheets.append(url_for('themes_path', path=os.path.join(
+            meta_theme, 'style.css')))
+    
+    if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
+        stylesheets.append(url_for('presentations_path', path=os.path.join(
+            presentation, 'presentation.css')))
+    
+    configs = []
+    for path in (themes, theme, presentation_path):
+        if os.path.exists(os.path.join(path, 'conf.js')):
+            with open(os.path.join(path, 'conf.js'), 'r') as fd:
+                configs.append(
+                    render_template_string(fd.read(), reveal_path=reveal_path))
+    with open('static/section.js', 'r') as fd:
+        configs.append(
+            render_template_string(fd.read(), presentation=presentation))
+                    
+    return render_template_string(
+        layout, wysiwyg=wysiwyg, meta=meta, presentation_text=presentation_text,
+        configs=configs, stylesheets=stylesheets, scripts=scripts)   
+
+
+@app.route('/save/<presentation>', methods=['POST'])
+def save(presentation):
+    """Save a presentation."""
+    sections = request.form['sections']
+    presentation_path = os.path.join(
+        app.config.root_path, 'presentations', presentation)
+    with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
+        fd.write(sections)
+
 
 if __name__ == '__main__':
     app.run()
