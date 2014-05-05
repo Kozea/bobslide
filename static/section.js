@@ -32,3 +32,17 @@ $('#save').click(function() {
 
   $.post( "{{ url_for('save', presentation=presentation) }}", { sections: sections } );
 });
+
+$('#add').click(function() {
+  $.post( "{{ url_for('add', presentation=presentation) }}" );
+});
+
+$('#remove').click(function() {
+  var section = [];
+  var slide = null;
+  $('section').each(function(){
+    section = '<section>' + $( this ).html() + '</section>';
+    });
+  alert($('div').hasClass('slide-number'));
+  $.post( "{{ url_for('remove', presentation=presentation) }}", { section: section }, { slide: slide } );
+});

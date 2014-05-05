@@ -13,7 +13,7 @@ app.config.update(dict(DEBUG=True, SECRET_KEY=b'iamsecret'))
 
 
 class MetaHTMLParser(HTMLParser):
-    """."""
+    """Retrieve the name of theme in the file meta.html."""
     def __init__(self, *args, **kwargs):
         super(MetaHTMLParser, self).__init__(*args, **kwargs)
         self.theme = []
@@ -22,7 +22,7 @@ class MetaHTMLParser(HTMLParser):
         if tag == 'meta' and dict(attrs).get('name') == 'theme':
             meta_theme = dict(attrs).get('content')
             self.theme.append(meta_theme)
-          
+
             
 def parser_theme(presentation):
     """Get the contents of meta.html and the theme of the presentation."""
@@ -37,7 +37,7 @@ def parser_theme(presentation):
 
 
 def list_themes():
-    """."""
+    """Create a list of themes"""
     themes = []
     path = os.path.join(app.config.root_path, 'themes')
     for folder in os.listdir(path):
@@ -77,10 +77,12 @@ def create():
         else:
             flash('Please, enter a name for the new presentation!')
             return redirect(url_for('create'))
-        if request.form['themes'] in themes:
+        if request.form['theme'] in themes:
             os.mkdir(os.path.join(path, name))
-            for file_ in ('presentation.html', 'presentation.css', 'conf.js'):
+            for file_ in ('presentation.css', 'conf.js'):
                 open(os.path.join(path, name, file_), 'w')
+            with open(os.path.join(path, name, 'presentation.html'), 'w') as fd:
+                fd.write('<section><h1>' + name + '</h1></section>')
             with open(os.path.join(path, name, 'meta.html'), 'w') as fd:
                 fd.write(
                     '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
@@ -251,10 +253,8 @@ def edit(presentation):
         
     with open(os.path.join(presentation_path, 'presentation.html'), 'r') as fd:
         presentation_text = fd.read()
-        
-        
-    with open('static/editor.html', 'r') as fd:
-        wysiwyg = fd.read()
+    with open('static/control.html', 'r') as fd:
+        control = render_template_string(fd.read())
     
     for path in (presentation_path, theme, themes):
         if os.path.exists(os.path.join(path, 'layout.html')):
@@ -304,7 +304,7 @@ def edit(presentation):
             render_template_string(fd.read(), presentation=presentation))
                     
     return render_template_string(
-        layout, wysiwyg=wysiwyg, meta=meta, presentation_text=presentation_text,
+        layout, control=control, meta=meta, presentation_text=presentation_text,
         configs=configs, stylesheets=stylesheets, scripts=scripts)   
 
 
@@ -317,6 +317,24 @@ def save(presentation):
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(sections)
 
+@app.route('/add/<presentation>', methods=['POST'])
+def add(presentation):
+    """Add a slide to the presentation."""
+    presentation_path = os.path.join(
+        app.config.root_path, 'presentations', presentation)
+    with open(os.path.join(presentation_path, 'presentation.html'), 'a') as fd:
+        fd.write('<section>Write here</section>')
+
+
+@app.route('/remove/<presentation>', methods=['POST'])
+def remove(presentation):
+    """Remove a slide of the presentation."""
+    section = request.form['section']
+    slide_number = request.form['slide']
+    presentation_path = os.path.join(
+        app.config.root_path, 'presentations', presentation)
+    
+    
 
 if __name__ == '__main__':
     app.run()

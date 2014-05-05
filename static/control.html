@@ -25,7 +25,13 @@
       <li><a data-role="subscript" href="#">Subscript</a></li>
       <li><a data-role="superscript" href="#">Superscript</a></li>
     </ul>
-    <ul>
-      <li><a href="#" id="save">Save</a></li>
-    </ul>
 </aside>
+
+<nav style="position:absolute; top:0; right:0;">
+  <ul>
+    <li><a href="#" id="save">Save</a></li>
+    <li><a href="{{ url_for('presentations') }}" id="close">Close</a></li>
+    <li><a href="#" id="add">Add</a></li>
+    <li><a href="#" id="remove">Remove</a></li>
+  </ul>
+</nav>
