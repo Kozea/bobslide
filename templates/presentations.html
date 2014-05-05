@@ -4,10 +4,10 @@
   {% for presentation in presentations %}
     <h2>{{ presentation }}</h2>
     <ul>  
-      <li><a href="{{ url_for('view', presentation=presentation) }}">View</a></li>
-      <li><a href="{{ url_for('edit', presentation=presentation) }}">Edit</a></li>
+      <li><a href="{{ url_for('presentation', action='view', presentation=presentation) }}">View</a></li>
+      <li><a href="{{ url_for('presentation', action='edit', presentation=presentation) }}">Edit</a></li>
       <li><a href="{{ url_for('delete', presentation=presentation) }}">Delete</a></li>
-      <li><a href="{{ url_for('export', presentation=presentation) }}">Export</a></li>
+      <li><a href="{{ url_for('presentation', action='export', presentation=presentation) }}">Export</a></li>
     </ul>
   {% endfor %}
 {% endblock main %}

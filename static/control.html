@@ -1,16 +1,17 @@
-<aside id="controls" style="position:absolute; top:0;">
+{% if control == 'edit' %}
+  <aside id="controls" style="position:absolute; top:0;">
     <ul>
       <li><a data-role="undo" href="#">Undo</a></li>
       <li><a data-role="redo" href="#">Redo</a></li>
     </ul>
     <ul>
-      <li><a data-role="bold" href="#"><strong>Bold</strong></a></li>
-      <li><a data-role="italic" href="#"><em>Italic</em></a></li>
+      <li><a data-role="bold" href="#">Bold</a></li>
+      <li><a data-role="italic" href="#">Italic</a></li>
       <li><a data-role="blockquote" href="#">Quote</a></li>
     </ul>
     <ul>
-      <li><a data-role="insertUnorderedList" href="#">List-ul</a></li>
-      <li><a data-role="insertOrderedList" href="#">List-ol</a></li>
+      <li><a data-role="insertUnorderedList" href="#">Unordered list</a></li>
+      <li><a data-role="insertOrderedList" href="#">Ordered list</a></li>
     </ul>
     <ul>
       <li><a data-role="h1" href="#">h1</a></li>
@@ -25,13 +26,18 @@
       <li><a data-role="subscript" href="#">Subscript</a></li>
       <li><a data-role="superscript" href="#">Superscript</a></li>
     </ul>
-</aside>
+  </aside>
+{% endif %}
 
-<nav style="position:absolute; top:0; right:0;">
-  <ul>
-    <li><a href="#" id="save">Save</a></li>
-    <li><a href="{{ url_for('presentations') }}" id="close">Close</a></li>
-    <li><a href="#" id="add">Add</a></li>
-    <li><a href="#" id="remove">Remove</a></li>
-  </ul>
-</nav>
+{% if control in ('view', 'edit') %}
+  <nav style="position:absolute; top:0; right:0;">
+    <ul>
+      {% if control == 'edit' %}
+        <li><a href="#" id="add">Add</a></li>
+        <li><a href="#" id="remove">Remove</a></li>
+        <li><a href="#" id="save">Save</a></li>
+      {% endif %}
+      <li><a href="{{ url_for('presentations') }}" id="close">Close</a></li>
+    </ul>
+  </nav>
+{% endif %}
