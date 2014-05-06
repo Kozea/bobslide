@@ -16,12 +16,11 @@ $(function() {
         document.execCommand($(this).data('role'), false, null);
         break;
     }
-    
   });
 });
 
 $('section').each(function(){
-    $(this).attr('contenteditable', 'true');
+  $(this).attr('contenteditable', 'true');
 });
 
 $('#save').click(function() {
@@ -34,15 +33,9 @@ $('#save').click(function() {
 });
 
 $('#add').click(function() {
-  $.post( "{{ url_for('add', presentation=presentation) }}" );
+  $('section.present').after('<section contenteditable="true">Write here!</section>');
 });
 
 $('#remove').click(function() {
-  var section = [];
-  var slide = null;
-  $('section').each(function(){
-    section = '<section>' + $( this ).html() + '</section>';
-    });
-  alert($('div').hasClass('slide-number'));
-  $.post( "{{ url_for('remove', presentation=presentation) }}", { section: section }, { slide: slide } );
+  $('section.present').remove();
 });

@@ -221,11 +221,12 @@ def presentation(action, presentation):
     if action == 'export':
         with open(os.path.join(dir_temp, 'index.html'), 'w') as fd:
             fd.write(index)
-        archive = shutil.make_archive(
-            os.path.join(tempfile.gettempdir(), presentation),
-            'zip', dir_temp)
+        archive = shutil.make_archive(dir_temp, 'zip', dir_temp)
+        attachment = send_file(
+            archive, attachment_filename='%s.zip' % presentation)
         shutil.rmtree(dir_temp)
-        return send_file(archive)
+        os.remove(archive)
+        return attachment
     else:
         return index
 
@@ -238,6 +239,7 @@ def save(presentation):
         app.config.root_path, 'presentations', presentation)
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(sections)
+
 
 @app.route('/add/<presentation>', methods=['POST'])
 def add(presentation):
