@@ -57,12 +57,6 @@ def presentations():
     return render_template('presentations.html', presentations=presentations)
 
 
-@app.route('/themes')
-def themes():
-    """Display all the themes."""
-    return render_template('themes.html', themes=list_themes())
-
-
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     """Create a presentation."""
