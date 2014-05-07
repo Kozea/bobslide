@@ -16,6 +16,7 @@ $(function() {
         document.execCommand($(this).data('role'), false, null);
         break;
     }
+    return false;
   });
 });
 
@@ -28,14 +29,23 @@ $('#save').click(function() {
   $('section').each(function(){
     sections += '<section>' + $( this ).html() + '</section>';
   });
-
-  $.post( "{{ url_for('save', presentation=presentation) }}", { sections: sections } );
+  $.post("{{ url_for('save', presentation=presentation) }}", {sections: sections});
+  return false;
 });
 
 $('#add').click(function() {
   $('section.present').after('<section contenteditable="true">Write here!</section>');
+  Reveal.next();
+  return false;
 });
 
 $('#remove').click(function() {
+  if (Reveal.isLastSlide() && Reveal.isFirstSlide()) {
+    return false;
+  }
+  index = Reveal.getIndices().h;
+  if (Reveal.isLastSlide()) { index--; }
   $('section.present').remove();
+  Reveal.slide(index, 0, 0);
+  return false;
 });
