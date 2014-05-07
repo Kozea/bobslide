@@ -103,7 +103,7 @@ def create():
                     '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
                     (name, request.form['theme']))
             flash('This presentation has been created!')
-            return redirect(url_for('presentations'))
+            return redirect(url_for('presentation', action='edit', presentation=name), code=303)
     return render_template('create.html', themes=themes)
 
 
