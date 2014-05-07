@@ -16,12 +16,22 @@ class MetaHTMLParser(HTMLParser):
     """Retrieve the name of theme in the file meta.html."""
     def __init__(self, *args, **kwargs):
         super(MetaHTMLParser, self).__init__(*args, **kwargs)
-        self.theme = []
+        self._active_tag = None
+        self.theme = None
+        self.title = None
 
     def handle_starttag(self, tag, attrs):
+        self._active_tag = tag
         if tag == 'meta' and dict(attrs).get('name') == 'theme':
             meta_theme = dict(attrs).get('content')
-            self.theme.append(meta_theme)
+            self.theme = meta_theme
+
+    def handle_data(self, data):
+        if self._active_tag == 'title':
+            self.title = data.strip()
+
+    def handle_endtag(self, tag):
+        self._active_tag = None
 
 
 def parser_theme(presentation):
@@ -32,8 +42,7 @@ def parser_theme(presentation):
         meta = fd.read()
     parser = MetaHTMLParser()
     parser.feed(meta)
-    meta_theme = parser.theme[-1]
-    return (meta, meta_theme)
+    return (meta, parser.theme, parser.title)
 
 
 def list_themes():
@@ -119,7 +128,7 @@ def presentation(action, presentation):
     configs = []
     presentation_path = os.path.join(
         app.config.root_path, 'presentations', presentation)
-    meta, meta_theme = parser_theme(presentation)
+    meta, meta_theme, title = parser_theme(presentation)
     themes = os.path.join(app.config.root_path, 'themes')
     theme = os.path.join(themes, meta_theme)
 
@@ -179,8 +188,10 @@ def presentation(action, presentation):
             url_for(route, path=os.path.join(
                 path, 'reveal.js', 'js', 'reveal.min.js'))]
 
-        with open('static/control.html', 'r') as fd:
-            control = render_template_string(fd.read(), control=action)
+        with open('themes/control.html', 'r') as fd:
+            control = render_template_string(
+                fd.read(), presentation=presentation, control=action,
+                title=title, themes=list_themes(), meta_theme=meta_theme)
 
         if os.path.exists(os.path.join(presentation_path, 'style.css')):
             stylesheets.append(url_for(
@@ -197,7 +208,7 @@ def presentation(action, presentation):
                 path=os.path.join(presentation, 'presentation.css')))
 
         if action == 'edit':
-            with open('static/section.js', 'r') as fd:
+            with open('themes/section.js', 'r') as fd:
                 configs.append(render_template_string(
                     fd.read(), presentation=presentation))
 
@@ -228,29 +239,13 @@ def presentation(action, presentation):
 @app.route('/save/<presentation>', methods=['POST'])
 def save(presentation):
     """Save a presentation."""
-    sections = request.form['sections']
     presentation_path = os.path.join(
         app.config.root_path, 'presentations', presentation)
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
-        fd.write(sections)
-
-
-@app.route('/add/<presentation>', methods=['POST'])
-def add(presentation):
-    """Add a slide to the presentation."""
-    presentation_path = os.path.join(
-        app.config.root_path, 'presentations', presentation)
-    with open(os.path.join(presentation_path, 'presentation.html'), 'a') as fd:
-        fd.write('<section>Write here</section>')
-
-
-@app.route('/remove/<presentation>', methods=['POST'])
-def remove(presentation):
-    """Remove a slide of the presentation."""
-    section = request.form['section']
-    slide_number = request.form['slide']
-    presentation_path = os.path.join(
-        app.config.root_path, 'presentations', presentation)
+        fd.write(request.form['sections'])
+    with open(os.path.join(presentation_path, 'meta.html'), 'w') as fd:
+        fd.write('<title>%s</title>\n<meta name="theme" content="%s" />\n' %
+            (request.form['title'], request.form['theme']))
 
 
 if __name__ == '__main__':
