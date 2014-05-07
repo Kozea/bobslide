@@ -1,10 +1,21 @@
+#!/usr/bin/python
+
+"""
+BobSlide
+========
+
+:copyright: (c) 2014 by Kozea and contributors.
+:license: BSD, see LICENSE for more details.
+
+"""
+
 import os
 import shutil
 import tempfile
-import zipfile
 from html.parser import HTMLParser
+
 from flask import (
-    Flask, request, session, g, redirect, url_for, abort, render_template,
+    Flask, request, redirect, url_for, abort, render_template,
     render_template_string, flash, send_file)
 
 
@@ -42,7 +53,7 @@ def list_themes():
     path = os.path.join(app.config.root_path, 'themes')
     for folder in os.listdir(path):
         if os.path.isdir(os.path.join(path, folder)):
-            if folder != "reveal.js":
+            if folder != 'reveal.js':
                 themes.append(folder)
     themes.sort()
     return themes
@@ -61,7 +72,7 @@ def presentations():
 def create():
     """Create a presentation."""
     themes = list_themes()
-    if request.method =='POST':
+    if request.method == 'POST':
         if request.form['name']:
             name = request.form['name']
             path = os.path.join(app.config.root_path, 'presentations')
@@ -75,8 +86,8 @@ def create():
             os.mkdir(os.path.join(path, name))
             for file_ in ('presentation.css', 'conf.js'):
                 open(os.path.join(path, name, file_), 'w')
-            with open(
-                os.path.join(path, name, 'presentation.html'), 'w') as fd:
+            with open(os.path.join(
+                    path, name, 'presentation.html'), 'w') as fd:
                 fd.write('<section><h1>' + name + '</h1></section>')
             with open(os.path.join(path, name, 'meta.html'), 'w') as fd:
                 fd.write(
@@ -233,24 +244,6 @@ def save(presentation):
         app.config.root_path, 'presentations', presentation)
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(sections)
-
-
-@app.route('/add/<presentation>', methods=['POST'])
-def add(presentation):
-    """Add a slide to the presentation."""
-    presentation_path = os.path.join(
-        app.config.root_path, 'presentations', presentation)
-    with open(os.path.join(presentation_path, 'presentation.html'), 'a') as fd:
-        fd.write('<section>Write here</section>')
-
-
-@app.route('/remove/<presentation>', methods=['POST'])
-def remove(presentation):
-    """Remove a slide of the presentation."""
-    section = request.form['section']
-    slide_number = request.form['slide']
-    presentation_path = os.path.join(
-        app.config.root_path, 'presentations', presentation)
 
 
 if __name__ == '__main__':
