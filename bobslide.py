@@ -263,6 +263,7 @@ def tail(presentation):
     """Edit the contents, the css and the script."""
     presentation_path = os.path.join(
         app.config.root_path, 'presentations', presentation)
+    meta, meta_theme, title = parser_theme(presentation)
     themes = list_themes()
 
     if os.path.join(presentation_path, 'presentation.html'):
@@ -306,7 +307,7 @@ def tail(presentation):
             presentation=new_presentation))
 
     return render_template('tail.html', presentation=presentation,
-        contents=contents, style_css=style_css, conf_js=conf_js, themes=themes)
+        contents=contents, style_css=style_css, conf_js=conf_js, themes=themes, meta_theme=meta_theme)
 
 
 if __name__ == '__main__':
