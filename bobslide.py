@@ -103,7 +103,9 @@ def create():
                     '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
                     (name, request.form['theme']))
             flash('This presentation has been created!')
-            return redirect(url_for('presentation', action='edit', presentation=name), code=303)
+            return redirect(
+                url_for('presentation', action='edit', presentation=name),
+                code=303)
     return render_template('create.html', themes=themes)
 
 
@@ -254,9 +256,57 @@ def save(presentation):
         app.config.root_path, 'presentations', presentation)
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(request.form['sections'])
-    with open(os.path.join(presentation_path, 'meta.html'), 'w') as fd:
-        fd.write('<title>%s</title>\n<meta name="theme" content="%s" />\n' %
-            (request.form['title'], request.form['theme']))
+
+
+@app.route('/tail/<presentation>', methods=['GET', 'POST'])
+def tail(presentation):
+    """Edit the contents, the css and the script."""
+    presentation_path = os.path.join(
+        app.config.root_path, 'presentations', presentation)
+    themes = list_themes()
+
+    if os.path.join(presentation_path, 'presentation.html'):
+        with open(os.path.join(
+            presentation_path, 'presentation.html'), 'r') as fd:
+            contents = fd.read()
+    else:
+        flash('presentation.html doesn\'t exists in the folder ' +
+            presentation)
+    if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
+        with open(os.path.join(
+            presentation_path, 'presentation.css'), 'r') as fd:
+                style_css = fd.read()
+    else:
+        flash('presentation.css doesn\'t exists in the folder ' + presentation)
+    if os.path.exists(os.path.join(presentation_path, 'conf.js')):
+        with open(os.path.join(presentation_path, 'conf.js'), 'r') as fd:
+            conf_js = fd.read()
+    else:
+        flash('conf.js doesn\'t exists in the folder ' + presentation)
+
+    if request.method == 'POST':
+        with open(os.path.join(
+            presentation_path, 'presentation.html'), 'w') as fd:
+            fd.write(request.form['contents'])
+        with open(os.path.join(
+            presentation_path, 'presentation.css'), 'w') as fd:
+            fd.write(request.form['css'])
+        with open(os.path.join(presentation_path, 'conf.js'), 'w') as fd:
+            fd.write(request.form['script'])
+        flash('The presentation ' + presentation + ' has been modified.')
+        with open(os.path.join(presentation_path, 'meta.html'), 'w') as fd:
+            fd.write(
+                '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
+                (request.form['title'], request.form['theme']))
+        new_presentation = (
+            request.form['title'] if request.form['title'] else presentation)
+        os.rename(presentation_path, os.path.join(
+            app.config.root_path, 'presentations', new_presentation))
+        return redirect(url_for('presentation', action='edit',
+            presentation=new_presentation))
+
+    return render_template('tail.html', presentation=presentation,
+        contents=contents, style_css=style_css, conf_js=conf_js, themes=themes)
 
 
 if __name__ == '__main__':

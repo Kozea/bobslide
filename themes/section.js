@@ -26,12 +26,10 @@ $('section').each(function(){
 
 $('#save').click(function() {
   var sections = '';
-  var title = $('#title').val();
-  var theme = $('#theme').val();
   $('section').each(function(){
     sections += '<section>' + $( this ).html() + '</section>';
   });
-  $.post("{{ url_for('save', presentation=presentation) }}", {sections: sections, title: title, theme: theme});
+  $.post("{{ url_for('save', presentation=presentation) }}", {sections: sections});
   return false;
 });
 

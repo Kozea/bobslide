@@ -3,7 +3,7 @@
 {% block main %}
   {% for presentation in presentations %}
     <h2>{{ presentation }}</h2>
-    <ul>  
+    <ul>
       <li><a href="{{ url_for('presentation', action='view', presentation=presentation) }}">View</a></li>
       <li><a href="{{ url_for('presentation', action='edit', presentation=presentation) }}">Edit</a></li>
       <li><a href="{{ url_for('delete', presentation=presentation) }}">Delete</a></li>
@@ -11,4 +11,3 @@
     </ul>
   {% endfor %}
 {% endblock main %}
-

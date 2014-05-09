@@ -27,18 +27,6 @@
       <li><a data-role="superscript" href="#">Superscript</a></li>
     </ul>
   </aside>
-  <aside style="position:absolute; bottom:20px;">
-    <form>
-      <label for="title">Name</label>
-      <input type="text" name="title" id="title" value="{{ title }}" />
-      <label for="theme">Theme</label>
-      <select id="theme" name="theme">
-        {% for theme in themes %}
-          <option value="{{ theme }}" {{ 'selected' if theme == meta_theme }}>{{ theme }}</option>
-        {% endfor %}
-      </select>
-    </form>
-  </aside>
 {% endif %}
 
 {% if control in ('view', 'edit') %}
@@ -47,6 +35,7 @@
       {% if control == 'edit' %}
         <li><a href="#" id="add">Add</a></li>
         <li><a href="#" id="remove">Remove</a></li>
+        <li><a href="{{ url_for('tail', presentation=presentation) }}">Edit tails</a></li>
         <li><a href="#" id="save">Save</a></li>
       {% endif %}
       <li><a href="{{ url_for('presentations') }}" id="close">Close</a></li>
