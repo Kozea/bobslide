@@ -257,8 +257,8 @@ def save(presentation):
         fd.write(request.form['sections'])
 
 
-@app.route('/tail/<presentation>', methods=['GET', 'POST'])
-def tail(presentation):
+@app.route('/details/<presentation>', methods=['GET', 'POST'])
+def details(presentation):
     """Edit the contents, the css and the script."""
     presentation_path = os.path.join(PRESENTATIONS_PATH, presentation)
     meta, meta_theme, title = parser_theme(presentation)
@@ -304,7 +304,7 @@ def tail(presentation):
         return redirect(url_for('presentation', action='edit',
             presentation=new_presentation))
 
-    return render_template('tail.html', presentation=presentation,
+    return render_template('details.html', presentation=presentation,
         contents=contents, style_css=style_css, conf_js=conf_js, themes=themes,
         meta_theme=meta_theme)
 

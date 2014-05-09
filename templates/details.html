@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block main %}
-  <form action="{{ url_for('tail', presentation=presentation) }}" method=post>
+  <form method="post">
     <label for="title">Name</label>
       <input type="text" name="title" id="title" value="{{ presentation }}" />
       <label for="theme">Theme</label>

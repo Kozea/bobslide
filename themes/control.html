@@ -9,7 +9,6 @@
       <li><a data-role="italic" href="#">Italic</a></li>
       <li><a data-role="blockquote" href="#">Quote</a></li>
     </ul>
-    <ul>
       <li><a data-role="insertUnorderedList" href="#">Unordered list</a></li>
       <li><a data-role="insertOrderedList" href="#">Ordered list</a></li>
     </ul>
@@ -35,7 +34,7 @@
       {% if control == 'edit' %}
         <li><a href="#" id="add">Add</a></li>
         <li><a href="#" id="remove">Remove</a></li>
-        <li><a href="{{ url_for('tail', presentation=presentation) }}">Edit tails</a></li>
+        <li><a href="{{ url_for('details', presentation=presentation) }}">Edit details</a></li>
         <li><a href="#" id="save">Save</a></li>
       {% endif %}
       <li><a href="{{ url_for('presentations') }}" id="close">Close</a></li>
