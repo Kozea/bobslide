@@ -307,7 +307,8 @@ def tail(presentation):
             presentation=new_presentation))
 
     return render_template('tail.html', presentation=presentation,
-        contents=contents, style_css=style_css, conf_js=conf_js, themes=themes, meta_theme=meta_theme)
+        contents=contents, style_css=style_css, conf_js=conf_js, themes=themes,
+        meta_theme=meta_theme)
 
 
 if __name__ == '__main__':
