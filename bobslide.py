@@ -26,7 +26,10 @@ SECRET_KEY = b'iamsecret'
 PRESENTATIONS_PATH = os.path.join(app.config.root_path, 'presentations')
 THEMES_PATH = os.path.join(app.config.root_path, 'themes')
 
+
 app.config.from_object(__name__)
+app.config.from_pyfile(os.path.expanduser(
+    os.path.join('~', '.config', 'bobslide')), silent=True)
 
 
 class MetaHTMLParser(HTMLParser):
@@ -53,7 +56,7 @@ class MetaHTMLParser(HTMLParser):
 
 def parser_theme(presentation):
     """Get the contents of meta.html and the theme of the presentation."""
-    presentation_path = os.path.join(PRESENTATIONS_PATH, presentation)
+    presentation_path = os.path.join(app.config['PRESENTATIONS_PATH'], presentation)
     with open(os.path.join(presentation_path, 'meta.html'), 'r') as fd:
         meta = fd.read()
     parser = MetaHTMLParser()
@@ -64,8 +67,8 @@ def parser_theme(presentation):
 def list_themes():
     """Create a list of themes"""
     themes = []
-    for folder in os.listdir(THEMES_PATH):
-        if os.path.isdir(os.path.join(THEMES_PATH, folder)):
+    for folder in os.listdir(app.config['THEMES_PATH']):
+        if os.path.isdir(os.path.join(app.config['THEMES_PATH'], folder)):
             if folder != 'reveal.js':
                 themes.append(folder)
     themes.sort()
@@ -76,7 +79,7 @@ def list_themes():
 @app.route('/presentations')
 def presentations():
     """Display all the presentations."""
-    presentations = sorted(os.listdir(PRESENTATIONS_PATH))
+    presentations = sorted(os.listdir(app.config['PRESENTATIONS_PATH']))
     return render_template('presentations.html', presentations=presentations)
 
 
@@ -87,7 +90,7 @@ def create():
     if request.method == 'POST':
         if request.form['name']:
             name = request.form['name']
-            path = PRESENTATIONS_PATH
+            path = app.config['PRESENTATIONS_PATH']
             if os.path.exists(os.path.join(path, name)):
                 flash('This presentation already exists!')
                 return redirect(url_for('create'))
@@ -117,7 +120,7 @@ def delete(presentation):
     """Delete a presentation."""
     if request.method == 'POST':
         if request.form['validation'] == 'yes':
-            shutil.rmtree(os.path.join(PRESENTATIONS_PATH, presentation))
+            shutil.rmtree(os.path.join(app.config['PRESENTATIONS_PATH'], presentation))
             flash('The presentation has been deleted.')
         return redirect(url_for('presentations'))
     return render_template('delete.html', presentation=presentation)
@@ -125,14 +128,20 @@ def delete(presentation):
 
 @app.route('/themes/<path:path>')
 def themes_path(path):
-    """Return scripts and css of reveal."""
+    """Return files from themes."""
     return send_file(os.path.join(THEMES_PATH, path))
+
+
+@app.route('/local_themes/<path:path>')
+def local_themes_path(path):
+    """Return files from local themes."""
+    return send_file(os.path.join(app.config['THEMES_PATH'], path))
 
 
 @app.route('/presentations/<path:path>')
 def presentations_path(path):
     """Return css of the presentation."""
-    return send_file(os.path.join(PRESENTATIONS_PATH, path))
+    return send_file(os.path.join(app.config['PRESENTATIONS_PATH'], path))
 
 
 @app.route('/presentation/<action>/<presentation>', methods=['GET'])
@@ -141,9 +150,9 @@ def presentation(action, presentation):
         abort(404)
 
     configs = []
-    presentation_path = os.path.join(PRESENTATIONS_PATH, presentation)
+    presentation_path = os.path.join(app.config['PRESENTATIONS_PATH'], presentation)
     meta, meta_theme, title = parser_theme(presentation)
-    theme = os.path.join(THEMES_PATH, meta_theme)
+    theme = os.path.join(app.config['THEMES_PATH'], meta_theme)
 
     for path in (presentation_path, theme, THEMES_PATH):
         if os.path.exists(os.path.join(path, 'layout.html')):
@@ -184,11 +193,12 @@ def presentation(action, presentation):
         if os.path.exists(os.path.join(presentation_path, 'reveal.js')):
             route = 'presentations_path'
             path = presentation
+        elif os.path.exists(os.path.join(theme, 'reveal.js')):
+            route = 'local_themes_path'
+            path = meta_theme
         else:
             route = 'themes_path'
-            path = (
-                meta_theme if os.path.exists(os.path.join(theme, 'reveal.js'))
-                else '.')
+            path = '.'
         reveal_path = url_for(route, path=os.path.join(path, 'reveal.js'))
         stylesheets = [
             url_for(route, path=os.path.join(
@@ -201,7 +211,7 @@ def presentation(action, presentation):
             url_for(route, path=os.path.join(
                 path, 'reveal.js', 'js', 'reveal.min.js'))]
 
-        with open('themes/control.html', 'r') as fd:
+        with open(os.path.join(THEMES_PATH, 'control.html'), 'r') as fd:
             control = render_template_string(
                 fd.read(), presentation=presentation, control=action,
                 title=title, themes=list_themes(), meta_theme=meta_theme)
@@ -212,7 +222,7 @@ def presentation(action, presentation):
                 path=os.path.join(presentation, 'style.css')))
         elif os.path.exists(os.path.join(theme, 'style.css')):
             stylesheets.append(url_for(
-                'themes_path',
+                'local_themes_path',
                 path=os.path.join(meta_theme, 'style.css')))
 
         if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
@@ -221,7 +231,7 @@ def presentation(action, presentation):
                 path=os.path.join(presentation, 'presentation.css')))
 
         if action == 'edit':
-            with open('themes/section.js', 'r') as fd:
+            with open(os.path.join(THEMES_PATH, 'section.js'), 'r') as fd:
                 configs.append(render_template_string(
                     fd.read(), presentation=presentation))
 
@@ -252,7 +262,7 @@ def presentation(action, presentation):
 @app.route('/save/<presentation>', methods=['POST'])
 def save(presentation):
     """Save a presentation."""
-    presentation_path = os.path.join(PRESENTATIONS_PATH, presentation)
+    presentation_path = os.path.join(app.config['PRESENTATIONS_PATH'], presentation)
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(request.form['sections'])
 
@@ -260,7 +270,7 @@ def save(presentation):
 @app.route('/details/<presentation>', methods=['GET', 'POST'])
 def details(presentation):
     """Edit the contents, the css and the script."""
-    presentation_path = os.path.join(PRESENTATIONS_PATH, presentation)
+    presentation_path = os.path.join(app.config['PRESENTATIONS_PATH'], presentation)
     meta, meta_theme, title = parser_theme(presentation)
     themes = list_themes()
 
@@ -300,7 +310,7 @@ def details(presentation):
         new_presentation = (
             request.form['title'] if request.form['title'] else presentation)
         os.rename(presentation_path, os.path.join(
-            PRESENTATIONS_PATH, new_presentation))
+            app.config['PRESENTATIONS_PATH'], new_presentation))
         return redirect(url_for('presentation', action='edit',
             presentation=new_presentation))
 
