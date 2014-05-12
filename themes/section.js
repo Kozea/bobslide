@@ -29,7 +29,7 @@ $('#save').click(function() {
   $('section').each(function(){
     sections += '<section>' + $( this ).html() + '</section>';
   });
-  $.post("{{ url_for('save', presentation=presentation) }}", {sections: sections});
+  $.post("{{ url_for('save', index=index, presentation=presentation) }}", {sections: sections});
   return false;
 });
 

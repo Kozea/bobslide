@@ -6,8 +6,8 @@
       <input type="text" name="title" id="title" value="{{ presentation }}" />
       <label for="theme">Theme</label>
       <select id="theme" name="theme">
-        {% for theme in themes %}
-          <option value="{{ theme }}" {{ 'selected' if theme == meta_theme }}>{{ theme }}</option>
+        {% for index, theme in themes %}
+          <option value="{{ index }}/{{ theme }}" {{ 'selected' if '%s/%s' % (index, theme) == meta_theme }}>{{ theme }}</option>
         {% endfor %}
       </select>
     <label for="contents">Modify the contents</label>
