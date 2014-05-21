@@ -73,7 +73,7 @@ def parser_theme(presentation_path):
 
 
 def list_themes():
-    """Create a list of themes"""
+    """Return a list of themes"""
     themes = []
     for index, path in enumerate(app.config['THEMES_PATHS']):
         for folder in os.listdir(path):
@@ -84,16 +84,22 @@ def list_themes():
     return themes
 
 
-@app.route('/')
-@app.route('/presentations')
-def presentations():
-    """Display all the presentations."""
+def list_presentations():
+    """Return a list of presentations"""
     presentations = []
     for index, path in enumerate(app.config['PRESENTATIONS_PATHS']):
         for presentation in os.listdir(path):
             presentations.append((index, presentation))
     presentations = sorted(presentations, key=itemgetter(1))
-    return render_template('presentations.html', presentations=presentations)
+    return presentations
+
+
+@app.route('/')
+@app.route('/presentations')
+def presentations():
+    """Display all the presentations."""
+    return render_template(
+        'presentations.html', presentations=list_presentations())
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -198,13 +204,15 @@ def presentation(action, index, presentation):
             shutil.copy(os.path.join(
                 presentation_path, 'presentation.css'), dir_temp)
 
+        lock = False
         for path in (presentation_path, theme, _THEMES_PATH):
-            if os.path.exists(os.path.join(path, 'reveal.js')):
+            if os.path.exists(os.path.join(path, 'reveal.js')) and not lock:
                 shutil.copytree(
                     os.path.join(path, 'reveal.js'),
                     os.path.join(dir_temp, 'reveal.js'))
+                lock = True
 
-        shutil.copytree(theme, os.path.join(dir_temp, meta_theme))
+        shutil.copytree(theme, theme_temp)
 
         for path in (presentation_path, theme):
             if os.path.exists(os.path.join(path, 'style.css')):
@@ -239,18 +247,16 @@ def presentation(action, index, presentation):
                 meta_theme=meta_theme)
 
         if os.path.exists(os.path.join(presentation_path, 'style.css')):
-            stylesheets.append(url_for(
-                'presentations_path',
-                path=os.path.join(str(index), presentation, 'style.css')))
+            stylesheets.append(url_for('presentations_path', path=os.path.join(
+                str(index), presentation, 'style.css')))
         elif os.path.exists(os.path.join(theme, 'style.css')):
             stylesheets.append(url_for(
                 'local_themes_path',
                 path=os.path.join(meta_theme, 'style.css')))
 
-        if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
-            stylesheets.append(url_for(
-                'presentations_path',
-                path=os.path.join(str(index), presentation, 'presentation.css')))
+        stylesheets.append(url_for(
+            'presentations_path',
+            path=os.path.join(str(index), presentation, 'presentation.css')))
 
         if action == 'edit':
             with open(os.path.join(_THEMES_PATH, 'section.js'), 'r') as fd:
@@ -298,19 +304,13 @@ def details(index, presentation):
     meta, meta_theme, title = parser_theme(presentation_path)
     themes = list_themes()
 
-    if os.path.join(presentation_path, 'presentation.html'):
-        with open(os.path.join(
-            presentation_path, 'presentation.html'), 'r') as fd:
-            contents = fd.read()
-    else:
-        flash('presentation.html doesn\'t exists in the folder ' +
-            presentation)
-    if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
-        with open(os.path.join(
-            presentation_path, 'presentation.css'), 'r') as fd:
-                style_css = fd.read()
-    else:
-        flash('presentation.css doesn\'t exists in the folder ' + presentation)
+    with open(os.path.join(
+        presentation_path, 'presentation.html'), 'r') as fd:
+        contents = fd.read()
+
+    with open(os.path.join(
+        presentation_path, 'presentation.css'), 'r') as fd:
+            style_css = fd.read()
 
     with open(os.path.join(presentation_path, 'conf.js'), 'r') as fd:
         conf_js = fd.read()
@@ -318,10 +318,10 @@ def details(index, presentation):
     if request.method == 'POST':
         with open(os.path.join(
             presentation_path, 'presentation.html'), 'w') as fd:
-            fd.write(request.form['contents'])
+                fd.write(request.form['contents'])
         with open(os.path.join(
             presentation_path, 'presentation.css'), 'w') as fd:
-            fd.write(request.form['css'])
+                fd.write(request.form['css'])
         with open(os.path.join(presentation_path, 'conf.js'), 'w') as fd:
             fd.write(request.form['script'])
         flash('The presentation ' + presentation + ' has been modified.')
@@ -341,7 +341,6 @@ def details(index, presentation):
         'details.html', presentation=presentation, contents=contents,
         style_css=style_css, conf_js=conf_js, themes=themes,
         meta_theme=meta_theme)
-
 
 if __name__ == '__main__':
     app.run()
