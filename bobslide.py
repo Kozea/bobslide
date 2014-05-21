@@ -198,7 +198,7 @@ def presentation(action, index, presentation):
         scripts = [
             'reveal.js/lib/js/head.min.js', 'reveal.js/js/reveal.min.js']
         dir_temp = tempfile.mkdtemp()
-        theme_temp = os.path.join(dir_temp, meta_theme)
+        theme_temp = os.path.join(dir_temp, theme_name)
 
         if os.path.exists(os.path.join(presentation_path, 'presentation.css')):
             shutil.copy(os.path.join(
