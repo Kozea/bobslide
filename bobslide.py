@@ -194,7 +194,7 @@ def presentation(action, index, presentation):
         control = ''
         stylesheets = [
             'reveal.js/css/reveal.min.css', 'reveal.js/lib/css/zenburn.css',
-            meta_theme + '/style.css', 'presentation.css']
+            theme_name + '/style.css', 'presentation.css']
         scripts = [
             'reveal.js/lib/js/head.min.js', 'reveal.js/js/reveal.min.js']
         dir_temp = tempfile.mkdtemp()
