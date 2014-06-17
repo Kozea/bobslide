@@ -6,17 +6,18 @@
   </head>
 
   <body>
-    <h1>Bobslide</h1>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('presentations') }}">See the presentations</a></li>
-        <li><a href="{{ url_for('create') }}">Create a presentation</a></li>
-      </ul>
-    </nav>
-
+    <header>
+      <h1>Bobslide</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('presentations') }}">See the presentations</a></li>
+          <li><a href="{{ url_for('create') }}">Create a presentation</a></li>
+        </ul>
+      </nav>
+    </header>
     <main>
       {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
+      <div class="flash">{{ message }}</div>
       {% endfor %}
       {% block main %}
       {% endblock main %}
