@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "SourceSansPro";
+  src: url("font/SourceSansPro-Light.eot");
+  src: url("font/SourceSansPro-Light.eot?#iefix") format("eot"), url("font/SourceSansPro-Light.woff") format("woff"), url("font/SourceSansPro-Light.otf") format("opentype"), url("font/SourceSansPro-Light.svg") format("svg");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SourceSansPro";
+  src: url("font/SourceSansPro-Semibold.eot");
+  src: url("font/SourceSansPro-Semibold.eot?#iefix") format("eot"), url("font/SourceSansPro-Semibold.woff") format("woff"), url("font/SourceSansPro-Semibold.otf") format("opentype"), url("font/SourceSansPro-Semibold.svg") format("svg");
+  font-weight: 500;
+  font-style: bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: url('images/bkgd-body.png')repeat;
+  color: #fff;
+  font-family: 'SourceSansPro',Arial ;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #323637;
+  border-bottom: 1px solid #3b4042;
+  display: table;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+header > h1 {
+  display: table-cell;
+}
+
+header > nav {
+  padding: 16px;
+}
+
+header > nav ul li {
+  display: inline;
+}
+
+header > nav ul li:first-child a {
+  border-right: 1px solid red;
+}
+
+
+header > nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 16px 15%;
+}
+
+header > nav ul li a:hover {
+  background-color: #eb5a5a;
+}
