@@ -5,11 +5,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
     {{ meta | safe }}
 
-    {% for stylesheet in stylesheets %}    
+    {% for stylesheet in stylesheets %}
       <link rel="stylesheet" href="{{ stylesheet }}" />
     {% endfor %}
   </head>
@@ -20,13 +19,13 @@
         {{ presentation_text | safe }}
       </div>
     </div>
-    
+
     {{ control }}
-    
+
     {% for script in scripts %}
       <script src="{{ script }}"></script>
     {% endfor %}
-    
+
     <script>
       {% for config in configs %}
         {{ config | safe }}

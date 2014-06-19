@@ -63,6 +63,38 @@ class MetaHTMLParser(HTMLParser):
         self._active_tag = None
 
 
+class PresentationHTMLParser(HTMLParser):
+    """Retrieve the name of theme in the file meta.html."""
+    def __init__(self, *args, **kwargs):
+        super(PresentationHTMLParser, self).__init__(*args, **kwargs)
+        self._active_tag = None
+        self.section_content = []
+
+    def handle_starttag(self, tag, attrs):
+        self._active_tag = tag
+        if tag != 'section':
+            if len(attrs) != 0:
+                for i in range(len(attrs)):
+                    self.section_content.append(
+                        '<' + tag + " " + attrs[i][0] + '=\'' + attrs[i][1]
+                        + '\'' + '>')
+            else:
+                self.section_content.append('<' + tag + '>')
+        else:
+            if dict(attrs).get('class') in ('past', 'present', 'future'):
+                self.section_content.append('<' + tag + '>')
+            else:
+                self.section_content.append(
+                    '<' + tag + " class=\'" + dict(attrs).get('class') + '\''
+                    + '>')
+
+    def handle_data(self, data):
+        self.section_content.append(data.strip())
+
+    def handle_endtag(self, tag):
+       self.section_content.append('</' + tag + '>')
+
+
 def parser_theme(presentation_path):
     """Get the contents of meta.html and the theme of the presentation."""
     with open(os.path.join(presentation_path, 'meta.html'), 'r') as fd:
@@ -70,6 +102,13 @@ def parser_theme(presentation_path):
     parser = MetaHTMLParser()
     parser.feed(meta)
     return (meta, parser.theme, parser.title)
+
+
+def parser_presentation(content):
+    """Get the contents of meta.html and the theme of the presentation."""
+    parser = PresentationHTMLParser()
+    parser.feed(content)
+    return (parser.section_content)
 
 
 def list_themes():
@@ -144,7 +183,8 @@ def delete(index, presentation):
                 app.config['PRESENTATIONS_PATHS'][index], presentation))
             flash('The presentation has been deleted.')
         return redirect(url_for('presentations'))
-    return render_template('delete.html', index=index, presentation=presentation)
+    return render_template(
+        'delete.html', index=index, presentation=presentation)
 
 
 @app.route('/themes/<path:path>')
@@ -157,14 +197,16 @@ def themes_path(path):
 def local_themes_path(path):
     """Return files from local themes."""
     index, path = path.split('/', 1)
-    return send_file(os.path.join(app.config['THEMES_PATHS'][int(index)], path))
+    return send_file(
+        os.path.join(app.config['THEMES_PATHS'][int(index)], path))
 
 
 @app.route('/presentations/<path:path>')
 def presentations_path(path):
     """Return css of the presentation."""
     index, path = path.split('/', 1)
-    return send_file(os.path.join(app.config['PRESENTATIONS_PATHS'][int(index)], path))
+    return send_file(os.path.join(
+        app.config['PRESENTATIONS_PATHS'][int(index)], path))
 
 
 @app.route('/presentation/<action>/<int:index>/<presentation>',
@@ -194,7 +236,7 @@ def presentation(action, index, presentation):
         control = ''
         stylesheets = [
             'reveal.js/css/reveal.min.css', 'reveal.js/lib/css/zenburn.css',
-            meta_theme + '/style.css', 'presentation.css']
+            theme_name + '/style.css', 'presentation.css']
         scripts = [
             'reveal.js/lib/js/head.min.js', 'reveal.js/js/reveal.min.js']
         dir_temp = tempfile.mkdtemp()
@@ -258,6 +300,8 @@ def presentation(action, index, presentation):
             'presentations_path',
             path=os.path.join(str(index), presentation, 'presentation.css')))
 
+        stylesheets.append(url_for('static', filename='control.css'))
+
         if action == 'edit':
             with open(os.path.join(_THEMES_PATH, 'section.js'), 'r') as fd:
                 configs.append(render_template_string(
@@ -290,9 +334,14 @@ def presentation(action, index, presentation):
 @app.route('/save/<int:index>/<presentation>', methods=['POST'])
 def save(index, presentation):
     """Save a presentation."""
-    presentation_path = os.path.join(app.config['PRESENTATIONS_PATHS'][index], presentation)
+    presentation_path = os.path.join(
+        app.config['PRESENTATIONS_PATHS'][index], presentation)
+    contents = ""
+    section_content = parser_presentation(request.form['sections'])
+    for i in range(len(section_content)):
+        contents += section_content[i]
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
-        fd.write(request.form['sections'])
+        fd.write(contents)
     return '200'
 
 
