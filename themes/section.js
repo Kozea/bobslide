@@ -6,15 +6,25 @@ for (var i=0; i<list.length ;i++) {
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote'
     ].indexOf(role) >= 0) {
         document.execCommand('formatBlock', false, role);
-    } else {
-        document.execCommand(role, false, null);
+    } else if (role == 'createLink') {
+        var range = window.getSelection().getRangeAt(0);
+        var content = range.extractContents();
+        var a = document.createElement('a');
+        a.appendChild(content);
+        var htmlContent = a.innerHTML;
+        document.execCommand(role, false, htmlContent);
+    }
+    else
+    {
+      document.execCommand(role, false, null);
     }
     return false;
   });
 }
 
 for (var i=0; document.getElementsByTagName('section').length > i; i++) {
-  document.getElementsByTagName('section')[i].setAttribute('contenteditable', 'true');
+  element = document.getElementsByTagName('section')[i];
+  element.setAttribute('contenteditable', 'true');
 };
 
 document.getElementById('save').addEventListener("click", function(event) {
