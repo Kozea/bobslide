@@ -64,35 +64,27 @@ class MetaHTMLParser(HTMLParser):
 
 
 class PresentationHTMLParser(HTMLParser):
-    """Retrieve the name of theme in the file meta.html."""
+    """Strip useless classes from editable content."""
     def __init__(self, *args, **kwargs):
         super(PresentationHTMLParser, self).__init__(*args, **kwargs)
-        self._active_tag = None
         self.section_content = []
 
     def handle_starttag(self, tag, attrs):
-        self._active_tag = tag
-        if tag != 'section':
-            if len(attrs) != 0:
-                for i in range(len(attrs)):
-                    self.section_content.append(
-                        '<' + tag + " " + attrs[i][0] + '=\'' + attrs[i][1]
-                        + '\'' + '>')
-            else:
-                self.section_content.append('<' + tag + '>')
-        else:
+        if tag == 'section':
             if dict(attrs).get('class') in ('past', 'present', 'future'):
-                self.section_content.append('<' + tag + '>')
+                self.section_content.append('<%s>' % tag)
             else:
                 self.section_content.append(
-                    '<' + tag + " class=\'" + dict(attrs).get('class') + '\''
-                    + '>')
+                    '<%s class="%s">' % (tag, dict(attrs).get('class')))
+        else:
+            self.section_content.append('<%s%s>' % (tag, ''.join(
+                ' %s="%s"' % (key, value) for key, value in attrs)))
 
     def handle_data(self, data):
         self.section_content.append(data.strip())
 
     def handle_endtag(self, tag):
-       self.section_content.append('</' + tag + '>')
+        self.section_content.append('</%s>' % tag)
 
 
 def parser_theme(presentation_path):
@@ -159,18 +151,16 @@ def create():
         os.mkdir(os.path.join(path, name))
         for file_ in ('presentation.css', 'conf.js'):
             open(os.path.join(path, name, file_), 'w')
-        with open(os.path.join(
-                path, name, 'presentation.html'), 'w') as fd:
-            fd.write('<section><h1>' + name + '</h1></section>')
+        with open(os.path.join(path, name, 'presentation.html'), 'w') as fd:
+            fd.write('<section><h1>%s</h1></section>' % name)
         with open(os.path.join(path, name, 'meta.html'), 'w') as fd:
             fd.write(
                 '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
                 (name, request.form['theme']))
         flash('This presentation has been created!')
-        return redirect(
-            url_for('presentation', action='edit', presentation=name,
-                index=index),
-            code=303)
+        url = url_for(
+            'presentation', action='edit', presentation=name, index=index)
+        return redirect(url, code=303)
     return render_template('create.html', themes=themes)
 
 
@@ -353,27 +343,25 @@ def details(index, presentation):
     meta, meta_theme, title = parser_theme(presentation_path)
     themes = list_themes()
 
-    with open(os.path.join(
-        presentation_path, 'presentation.html'), 'r') as fd:
+    with open(os.path.join(presentation_path, 'presentation.html')) as fd:
         contents = fd.read()
 
-    with open(os.path.join(
-        presentation_path, 'presentation.css'), 'r') as fd:
-            style_css = fd.read()
+    with open(os.path.join(presentation_path, 'presentation.css')) as fd:
+        style_css = fd.read()
 
-    with open(os.path.join(presentation_path, 'conf.js'), 'r') as fd:
+    with open(os.path.join(presentation_path, 'conf.js')) as fd:
         conf_js = fd.read()
 
     if request.method == 'POST':
         with open(os.path.join(
-            presentation_path, 'presentation.html'), 'w') as fd:
-                fd.write(request.form['contents'])
+                presentation_path, 'presentation.html'), 'w') as fd:
+            fd.write(request.form['contents'])
         with open(os.path.join(
-            presentation_path, 'presentation.css'), 'w') as fd:
-                fd.write(request.form['css'])
+                presentation_path, 'presentation.css'), 'w') as fd:
+            fd.write(request.form['css'])
         with open(os.path.join(presentation_path, 'conf.js'), 'w') as fd:
             fd.write(request.form['script'])
-        flash('The presentation ' + presentation + ' has been modified.')
+        flash('The presentation %s has been modified.' % presentation)
         with open(os.path.join(presentation_path, 'meta.html'), 'w') as fd:
             fd.write(
                 '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
