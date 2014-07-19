@@ -380,4 +380,4 @@ def details(index, presentation):
         meta_theme=meta_theme)
 
 if __name__ == '__main__':
-    app.run()
+    app.run()  # pragma: no cover
