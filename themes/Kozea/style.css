@@ -1,0 +1,67 @@
+body {
+  background: #eee url(logo.svg) no-repeat bottom right;
+  border-top: 6px solid #5e8183;
+  box-sizing: border-box;
+  font-family: "Source Sans Pro", Verdana, Arial, sans-serif;
+  font-size: 2em;
+  color: #616161;
+  text-align: left;
+  font-weight: 300;
+}
+
+*[contenteditable=true] {
+  outline: none;
+}
+
+::selection {
+  background: #5e8183;
+}
+
+.reveal .progress {
+  height: 6px;
+}
+
+.reveal .progress span {
+  background: #5e8183;
+}
+
+.reveal h1, .reveal h2 {
+  color: #5e8183;
+  margin: 0.3em;
+}
+
+.reveal h3 {
+  color: #f59129;
+  margin: 0.3em;
+}
+
+.reveal .slide-number {
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
+}
+
+.reveal .controls {
+  opacity: 0.1;
+  transition: 1s;
+}
+
+.reveal .controls:hover {
+  opacity: 0.5;
+}
+
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #5e8183;
+}
+
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #5e8183;
+}
+
+.reveal .controls .navigate-top.enabled {
+  border-bottom-color: #5e8183;
+}
+
+.reveal .controls .navigate-bottom.enabled {
+  border-top-color: #5e8183;
+}
