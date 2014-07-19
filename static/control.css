@@ -1,0 +1,57 @@
+.buttons {
+  font-size: 0.6em;
+  opacity: 0.1;
+  position: absolute;
+  top: 0;
+  transition: 1s;
+}
+
+.buttons:hover {
+  opacity: 0.5;
+}
+
+aside.buttons {
+  max-width: 75%;
+}
+
+nav.buttons {
+  max-width: 25%;
+  right: 0;
+}
+
+.buttons ul {
+  list-style: none;
+  margin: 0.2em;
+  padding: 0;
+}
+
+.buttons li {
+  float: left;
+}
+
+.buttons a {
+  color: transparent;
+  display: block;
+  line-height: 0;
+  margin: 0.1em;
+  outline: 0;
+  text-align: center;
+  width: 2em;
+}
+
+.buttons a:after {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  color: black;
+  content: attr(data-char);
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  padding: 0.5em;
+  transition: 0.3s;
+  width: 1em;
+}
+
+.buttons a:hover:after {
+  background-color: rgba(0, 0, 0, 0.2);
+}
