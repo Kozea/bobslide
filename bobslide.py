@@ -326,7 +326,7 @@ def save(index, presentation):
     """Save a presentation."""
     presentation_path = os.path.join(
         app.config['PRESENTATIONS_PATHS'][index], presentation)
-    contents = ""
+    contents = ''
     section_content = parser_presentation(request.form['sections'])
     for i in range(len(section_content)):
         contents += section_content[i]
