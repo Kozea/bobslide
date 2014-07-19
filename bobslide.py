@@ -59,6 +59,9 @@ class MetaHTMLParser(HTMLParser):
         if self._active_tag == 'title':
             self.title = data.strip()
 
+    def handle_entityref(self, name):
+        self.section_content.append('&%s;' % name)
+
     def handle_endtag(self, tag):
         self._active_tag = None
 
@@ -81,7 +84,10 @@ class PresentationHTMLParser(HTMLParser):
                 ' %s="%s"' % (key, value) for key, value in attrs)))
 
     def handle_data(self, data):
-        self.section_content.append(data.strip())
+        self.section_content.append(data)
+
+    def handle_entityref(self, name):
+        self.section_content.append('&%s;' % name)
 
     def handle_endtag(self, tag):
         self.section_content.append('</%s>' % tag)
@@ -100,7 +106,7 @@ def parser_presentation(content):
     """Get the contents of meta.html and the theme of the presentation."""
     parser = PresentationHTMLParser()
     parser.feed(content)
-    return (parser.section_content)
+    return parser.section_content
 
 
 def list_themes():
@@ -111,8 +117,7 @@ def list_themes():
             if os.path.isdir(os.path.join(path, folder)):
                 if folder != 'reveal.js':
                     themes.append((index, folder))
-    themes = sorted(themes, key=itemgetter(1))
-    return themes
+    return sorted(themes, key=itemgetter(1))
 
 
 def list_presentations():
@@ -121,8 +126,7 @@ def list_presentations():
     for index, path in enumerate(app.config['PRESENTATIONS_PATHS']):
         for presentation in os.listdir(path):
             presentations.append((index, presentation))
-    presentations = sorted(presentations, key=itemgetter(1))
-    return presentations
+    return sorted(presentations, key=itemgetter(1))
 
 
 @app.route('/')
@@ -326,13 +330,10 @@ def save(index, presentation):
     """Save a presentation."""
     presentation_path = os.path.join(
         app.config['PRESENTATIONS_PATHS'][index], presentation)
-    contents = ''
-    section_content = parser_presentation(request.form['sections'])
-    for i in range(len(section_content)):
-        contents += section_content[i]
+    contents = ''.join(parser_presentation(request.form['sections']))
     with open(os.path.join(presentation_path, 'presentation.html'), 'w') as fd:
         fd.write(contents)
-    return '200'
+    return '200 OK'
 
 
 @app.route('/details/<int:index>/<presentation>', methods=['GET', 'POST'])

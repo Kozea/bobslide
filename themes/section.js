@@ -34,7 +34,7 @@ document.getElementById('save').addEventListener('click', function(event) {
   var request = new XMLHttpRequest();
   request.open('POST', '{{ url_for("save", index=index, presentation=presentation) }}', true);
   request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-  request.send('sections=' + sections);
+  request.send('sections=' + encodeURIComponent(sections));
   event.preventDefault();
   return false;
 });
