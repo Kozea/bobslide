@@ -25,7 +25,6 @@ app = Flask(__name__)
 _THEMES_PATH = os.path.join(app.config.root_path, 'themes')
 
 DEBUG = False
-SECRET_KEY = b'iamsecret'
 PRESENTATIONS_PATHS = [os.path.join(app.config.root_path, 'presentations')]
 THEMES_PATHS = [_THEMES_PATH]
 
