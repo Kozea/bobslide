@@ -27,6 +27,7 @@ _THEMES_PATH = os.path.join(app.config.root_path, 'themes')
 DEBUG = False
 PRESENTATIONS_PATHS = [os.path.join(app.config.root_path, 'presentations')]
 THEMES_PATHS = [_THEMES_PATH]
+SECRET_KEY= 'secret_key_that_must_be_changed'
 
 
 app.config.from_object(__name__)
