@@ -1,22 +1,22 @@
 .buttons {
+  background: #323637;
   font-size: 0.6em;
-  opacity: 0.1;
+  opacity: 1;
   position: absolute;
   top: 0;
   transition: 1s;
 }
 
-.buttons:hover {
-  opacity: 0.5;
-}
 
 aside.buttons {
   max-width: 75%;
+    right: 0;
 }
 
 nav.buttons {
   max-width: 25%;
-  right: 0;
+  height: 100%;
+
 }
 
 .buttons ul {
@@ -25,7 +25,11 @@ nav.buttons {
   padding: 0;
 }
 
-.buttons li {
+.buttons ul li{
+
+}
+
+aside.buttons li {
   float: left;
 }
 
@@ -40,9 +44,9 @@ nav.buttons {
 }
 
 .buttons a:after {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-  color: black;
+  border-left: 1px solid red;
+
+  color: #fff;
   content: attr(data-char);
   display: block;
   height: 1em;
@@ -53,5 +57,5 @@ nav.buttons {
 }
 
 .buttons a:hover:after {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: blue;
 }
