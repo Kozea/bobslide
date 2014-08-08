@@ -1,5 +1,15 @@
+@font-face {
+  font-family: "SourceSansPro";
+  src: url("font/SourceSansPro-Semibold.eot");
+  src: url("font/SourceSansPro-Semibold.eot?#iefix") format("eot"), url("font/SourceSansPro-Semibold.woff") format("woff"), url("font/SourceSansPro-Semibold.otf") format("opentype"), url("font/SourceSansPro-Semibold.svg") format("svg");
+  font-weight: 500;
+  font-style: bold;
+}
+
 .buttons {
   background: #323637;
+  font-family: 'SourceSansPro', Arial ;
+  font-weight: 500;
   font-size: 0.6em;
   opacity: 1;
   position: absolute;
