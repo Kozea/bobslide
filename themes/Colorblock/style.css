@@ -20,18 +20,16 @@
 }
 
 body {
-  background: url(bkgd.png) repeat;
-  border: 6px solid #ffc94b;
-  box-sizing: border-box;
-  font-family: "MyriadPro", Verdana, Arial, sans-serif;
+  background: url(bkgd.png)repeat;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 2em;
-  color: #616161;
+  color: #4f4f4f;
   text-align: left;
   font-weight: 400;
 }
 
 a {
-  color: #5e8183;
+  color: #f45550;
 }
 
 *[contenteditable=true] {
@@ -39,25 +37,38 @@ a {
 }
 
 ::selection {
-  background: #5e8183;
+  background: #ffc94b;
+  color: #fff;
 }
 
 .reveal .progress {
   height: 6px;
 }
 
-.reveal .progress span {
-  background: #5e8183;
+.reveal .backgrounds {
+  border: 6px solid #ffc94b;
+  box-sizing: border-box;
 }
 
-.reveal h1, .reveal h2 {
-  color: #5e8183;
-  margin: 0.3em;
+.reveal .progress span {
+  background: #4ab9cf;
+}
+
+.reveal h1 ,.reveal h2{
+  color: #ffc94b;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
 }
 
 .reveal h3 {
-  color: #f59129;
+  color: #4ab9cf;
+  font-weight: 700;
+}
+
+.reveal h4 {
+  color: #f45550;
   margin: 0.3em;
+  font-weight: 700;
 }
 
 .reveal .slide-number {
