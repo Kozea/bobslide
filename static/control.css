@@ -10,42 +10,51 @@
 
 aside.buttons {
   max-width: 75%;
-    right: 0;
+  right: 0;
+  border: 1px solid #3b4042;
+  border-top: none;
+}
+
+aside.buttons li {
+  float: left;
+  border-left: 1px solid #3b4042;
+}
+
+aside.buttons li:first-child {
+  border-left: none;
 }
 
 nav.buttons {
   max-width: 25%;
   height: 100%;
+  border-right: #3b4042;
+}
 
+nav.buttons ul li{
+  border-top: 1px solid #3b4042;
+}
+
+nav.buttons li:last-child {
+  border-bottom: 1px solid #3b4042;
 }
 
 .buttons ul {
   list-style: none;
-  margin: 0.2em;
+  margin: 0;
   padding: 0;
-}
-
-.buttons ul li{
-
-}
-
-aside.buttons li {
-  float: left;
 }
 
 .buttons a {
   color: transparent;
   display: block;
   line-height: 0;
-  margin: 0.1em;
+  margin: 0;
   outline: 0;
   text-align: center;
   width: 2em;
 }
 
 .buttons a:after {
-  border-left: 1px solid red;
-
   color: #fff;
   content: attr(data-char);
   display: block;
@@ -57,5 +66,5 @@ aside.buttons li {
 }
 
 .buttons a:hover:after {
-  background-color: blue;
+  background-color: #eb5a5a;
 }
