@@ -44,8 +44,8 @@ header {
 }
 
 header > h1 {
-display: table-cell;
-line-height: 1.3em;
+  display: table-cell;
+  line-height: 1.3em;
 }
 
 header > nav {
@@ -77,3 +77,28 @@ header > nav ul li a {
 header > nav ul li:hover {
   background-color: #eb5a5a;
 }
+
+body main {
+  margin: 0 auto;
+  padding-top: 250px;
+  width: 67%;
+  overflow: hidden;
+  width: 960px;
+}
+
+body main section {
+  float: left;
+  position: relative;
+  overflow: hidden;
+  width: 449px;
+  height: 240px;
+  margin: 0 3% 60px 0;
+  background: #323637;
+  border: 1px solid #3b4042;
+}
+
+body main section:nth-child(even) {
+  margin-left: 3%;
+  margin-right: 0;
+}
+
