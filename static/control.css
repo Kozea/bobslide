@@ -85,6 +85,14 @@ nav.buttons.edit li:last-child {
   border-bottom: 1px solid #3b4042;
 }
 
+nav.buttons.view ul li a:after {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+nav.buttons.view ul li a:hover:after {
+  color: rgba(0, 0, 0, 0.3);
+}
+
 .buttons.edit a:hover:after {
   background-color: #eb5a5a;
 }
