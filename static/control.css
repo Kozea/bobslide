@@ -14,6 +14,34 @@
   position: absolute;
   top: 0;
   transition: 1s;
+  z-index: 1;
+}
+
+.buttons ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.buttons a {
+  color: transparent;
+  display: block;
+  line-height: 0;
+  margin: 0;
+  outline: 0;
+  text-align: center;
+  width: 2em;
+}
+
+.buttons a:after {
+  color: #fff;
+  content: attr(data-char);
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  padding: 0.5em;
+  transition: 0.3s;
+  width: 1em;
 }
 
 aside.buttons {
@@ -55,33 +83,6 @@ nav.buttons.edit ul li{
 
 nav.buttons.edit li:last-child {
   border-bottom: 1px solid #3b4042;
-}
-
-.buttons ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.buttons a {
-  color: transparent;
-  display: block;
-  line-height: 0;
-  margin: 0;
-  outline: 0;
-  text-align: center;
-  width: 2em;
-}
-
-.buttons a:after {
-  color: #fff;
-  content: attr(data-char);
-  display: block;
-  height: 1em;
-  line-height: 1em;
-  padding: 0.5em;
-  transition: 0.3s;
-  width: 1em;
 }
 
 .buttons.edit a:hover:after {
