@@ -5,10 +5,10 @@
     <section>
       <h2>{{ presentation }}</h2>
       <ul>
-        <li><a href="{{ url_for('presentation', action='view', index=index, presentation=presentation) }}">View</a></li>
-        <li><a href="{{ url_for('presentation', action='edit', index=index, presentation=presentation) }}">Edit</a></li>
-        <li><a href="{{ url_for('delete', index=index, presentation=presentation) }}">Delete</a></li>
-        <li><a href="{{ url_for('presentation', action='export', index=index, presentation=presentation) }}">Export</a></li>
+        <li><a data-char="🔍" href="{{ url_for('presentation', action='view', index=index, presentation=presentation) }}"></a></li>
+        <li><a data-char="✒" href="{{ url_for('presentation', action='edit', index=index, presentation=presentation) }}"></a></li>
+        <li><a data-char="×" href="{{ url_for('delete', index=index, presentation=presentation) }}"></a></li>
+        <li><a data-char="⬇" href="{{ url_for('presentation', action='export', index=index, presentation=presentation) }}"></a></li>
       </ul>
       <iframe src="{{ url_for('presentation', action='view', index=index, presentation=presentation) }}"></iframe>
     </section>
