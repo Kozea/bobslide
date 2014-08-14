@@ -1,5 +1,5 @@
 {% if control == 'edit' %}
-  <aside class="buttons">
+  <aside class="buttons {{ control }}">
     <ul>
       <li><a data-role="undo" data-char="↶" href="#">Undo</a></li>
       <li><a data-role="redo" data-char="↷" href="#">Redo</a></li>
@@ -23,7 +23,7 @@
 {% endif %}
 
 {% if control in ('view', 'edit') %}
-  <nav class="buttons">
+  <nav class="buttons {{ control }}">
     <ul>
       {% if control == 'edit' %}
         <li><a data-char="+" href="#" id="add">Add</a></li>
