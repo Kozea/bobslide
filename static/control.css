@@ -2,20 +2,19 @@
   font-family: "SourceSansPro";
   src: url("font/SourceSansPro-Semibold.eot");
   src: url("font/SourceSansPro-Semibold.eot?#iefix") format("eot"), url("font/SourceSansPro-Semibold.woff") format("woff"), url("font/SourceSansPro-Semibold.otf") format("opentype"), url("font/SourceSansPro-Semibold.svg") format("svg");
-  font-weight: 500;
   font-style: bold;
+  font-weight: 500;
 }
 
 .buttons {
   font-family: 'SourceSansPro', Arial ;
-  font-weight: 500;
   font-size: 0.6em;
+  font-weight: 500;
   opacity: 1;
   position: absolute;
   top: 0;
   transition: 1s;
 }
-
 
 aside.buttons {
   right: 0;
@@ -24,32 +23,37 @@ aside.buttons {
 }
 
 aside.buttons ul {
+  background: #323637;
   border-top: none;
   border: 1px solid #3b4042;
   display: inline-block;
-  background: #323637;
 }
 
 aside.buttons li {
-  float: left;
   border-left: 1px solid #3b4042;
+  float: left;
 }
 
 aside.buttons li:first-child {
   border-left: none;
 }
 
-nav.buttons {
-  max-width: 25%;
+nav.buttons.edit {
+  background: #323637;
+  border-right: 1px solid #3b4042;
   height: 100%;
-  border-right: #3b4042;
+  max-width: 25%;
 }
 
-nav.buttons ul li{
+nav.buttons.edit ul {
+  margin-top: 40px;
+}
+
+nav.buttons.edit ul li{
   border-top: 1px solid #3b4042;
 }
 
-nav.buttons li:last-child {
+nav.buttons.edit li:last-child {
   border-bottom: 1px solid #3b4042;
 }
 
@@ -80,6 +84,6 @@ nav.buttons li:last-child {
   width: 1em;
 }
 
-.buttons a:hover:after {
+.buttons.edit a:hover:after {
   background-color: #eb5a5a;
 }
