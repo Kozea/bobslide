@@ -146,6 +146,9 @@ body main section ul li a:after {
   width: 1em;
 }
 
+body main section ul li:hover a:after {
+  color: #eb5a5a;
+}
 
 body main section:hover ul {
   opacity: 1;
