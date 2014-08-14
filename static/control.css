@@ -7,7 +7,6 @@
 }
 
 .buttons {
-  background: #323637;
   font-family: 'SourceSansPro', Arial ;
   font-weight: 500;
   font-size: 0.6em;
@@ -19,10 +18,16 @@
 
 
 aside.buttons {
-  max-width: 75%;
   right: 0;
-  border: 1px solid #3b4042;
+  text-align: center;
+  width: 100%;
+}
+
+aside.buttons ul {
   border-top: none;
+  border: 1px solid #3b4042;
+  display: inline-block;
+  background: #323637;
 }
 
 aside.buttons li {
