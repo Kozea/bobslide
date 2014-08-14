@@ -80,27 +80,23 @@ header > nav ul li:hover {
 
 body main {
   margin: 0 auto;
-  padding-top: 250px;
   overflow: hidden;
-  width: 960px;
+  padding-top: 250px;
+  text-align: center;
 }
 
 body main section {
   background: #323637;
   border: 1px solid #3b4042;
   box-sizing: border-box;
-  float: left;
+  display: inline-block;
   height: 240px;
-  margin: 0 3% 60px 0;
+  margin: 0 1.5% 60px 1.5%;
   overflow: hidden;
   padding: 2%;
   position: relative;
+  text-align: left;
   width: 449px;
-}
-
-body main section:nth-child(even) {
-  margin-left: 3%;
-  margin-right: 0;
 }
 
 /*forms*/
