@@ -10,6 +10,7 @@
         <li><a href="{{ url_for('delete', index=index, presentation=presentation) }}">Delete</a></li>
         <li><a href="{{ url_for('presentation', action='export', index=index, presentation=presentation) }}">Export</a></li>
       </ul>
+      <iframe src="{{ url_for('presentation', action='view', index=index, presentation=presentation) }}"></iframe>
     </section>
   {% endfor %}
 {% endblock main %}

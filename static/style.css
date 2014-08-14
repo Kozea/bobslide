@@ -93,10 +93,50 @@ body main section {
   height: 240px;
   margin: 0 1.5% 60px 1.5%;
   overflow: hidden;
-  padding: 2%;
   position: relative;
   text-align: left;
-  width: 449px;
+  width: 450px;
+}
+
+body main section iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+body main section h2 {
+  background: rgba(0, 0, 0, 0.8);
+  bottom: 0;
+  height: 1.5em;
+  line-height: 1.5em;
+  position: absolute;
+  transition-property: height;
+  transition-duration: 0.5s;
+  width: 100%;
+}
+
+body main section:hover h2 {
+  height: 100%;
+}
+
+body main section ul {
+  height: 100%;
+  line-height: 240px;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  vertial-align: middle;
+  width: 100%;
+}
+
+body main section ul li {
+  display: inline;
+}
+
+body main section:hover ul {
+  opacity: 1;
 }
 
 /*forms*/
