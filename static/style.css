@@ -54,6 +54,7 @@ header > nav {
   vertical-align: top;
 
 }
+
 header > nav ul {
   display: table;
   height: 100%;
@@ -79,19 +80,16 @@ header > nav ul li:hover {
 }
 
 body main {
-  margin: 0 auto;
-  overflow: hidden;
-  padding-top: 250px;
+  padding-top: 15%;
   text-align: center;
 }
 
 body main section {
-  background: #323637;
   border: 1px solid #3b4042;
   box-sizing: border-box;
   display: inline-block;
-  height: 240px;
-  margin: 0 1.5% 60px 1.5%;
+  height: 260px;
+  margin: 0 1.5% 3% 1.5%;
   overflow: hidden;
   position: relative;
   text-align: left;
@@ -105,7 +103,7 @@ body main section iframe {
 }
 
 body main section h2 {
-  background: rgba(0, 0, 0, 0.8);
+  background: #323637;
   bottom: 0;
   height: 1.5em;
   line-height: 1.5em;
@@ -134,6 +132,20 @@ body main section ul {
 body main section ul li {
   display: inline;
 }
+
+body main section ul li a {
+  text-decoration: none;
+}
+
+body main section ul li a:after {
+  color: #fff;
+  content: attr(data-char);
+  font-size: 1.8em;
+  height: 1em;
+  padding: 0.5em;
+  width: 1em;
+}
+
 
 body main section:hover ul {
   opacity: 1;
