@@ -6,6 +6,11 @@
   font-weight: 500;
 }
 
+@font-face {
+  font-family: "Bobslide";
+  src: url("font/Bobslide.otf") format("opentype");
+}
+
 .buttons {
   font-family: 'SourceSansPro', Arial ;
   font-size: 0.6em;
@@ -74,6 +79,7 @@ nav.buttons.edit {
 }
 
 nav.buttons.edit ul {
+  font-family: Bobslide;
   margin-top: 40px;
 }
 
@@ -83,6 +89,10 @@ nav.buttons.edit ul li{
 
 nav.buttons.edit li:last-child {
   border-bottom: 1px solid #3b4042;
+}
+
+nav.buttons.edit ul li a {
+  font-size: 1.5em;
 }
 
 nav.buttons.view ul li a:after {

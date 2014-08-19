@@ -7,11 +7,8 @@
 }
 
 @font-face {
-  font-family: "SourceSansPro";
-  src: url("font/SourceSansPro-Semibold.eot");
-  src: url("font/SourceSansPro-Semibold.eot?#iefix") format("eot"), url("font/SourceSansPro-Semibold.woff") format("woff"), url("font/SourceSansPro-Semibold.otf") format("opentype"), url("font/SourceSansPro-Semibold.svg") format("svg");
-  font-style: bold;
-  font-weight: 500;
+  font-family: "Bobslide";
+  src: url("font/Bobslide.otf") format("opentype");
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -118,6 +115,7 @@ body main section:hover h2 {
 }
 
 body main section ul {
+  font-family: Bobslide;
   height: 100%;
   line-height: 240px;
   opacity: 0;
@@ -140,7 +138,7 @@ body main section ul li a {
 body main section ul li a:after {
   color: #fff;
   content: attr(data-char);
-  font-size: 1.8em;
+  font-size: 2em;
   height: 1em;
   padding: 0.5em;
   width: 1em;
