@@ -147,10 +147,10 @@ def create():
             name = request.form['name']
             path = app.config['PRESENTATIONS_PATHS'][index]
             if os.path.exists(os.path.join(path, name)):
-                flash('This presentation already exists!')
+                flash('This presentation already exists')
                 return redirect(url_for('create'))
         else:
-            flash('Please, enter a name for the new presentation!')
+            flash('Please, enter a name for the new presentation')
             return redirect(url_for('create'))
         os.mkdir(os.path.join(path, name))
         for file_ in ('presentation.css', 'conf.js'):
@@ -161,7 +161,6 @@ def create():
             fd.write(
                 '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
                 (name, request.form['theme']))
-        flash('This presentation has been created!')
         url = url_for(
             'presentation', action='edit', presentation=name, index=index)
         return redirect(url, code=303)
@@ -175,7 +174,6 @@ def delete(index, presentation):
         if request.form['validation'] == 'yes':
             shutil.rmtree(os.path.join(
                 app.config['PRESENTATIONS_PATHS'][index], presentation))
-            flash('The presentation has been deleted.')
         return redirect(url_for('presentations'))
     return render_template(
         'delete.html', index=index, presentation=presentation)
@@ -362,7 +360,6 @@ def details(index, presentation):
             fd.write(request.form['css'])
         with open(os.path.join(presentation_path, 'conf.js'), 'w') as fd:
             fd.write(request.form['script'])
-        flash('The presentation %s has been modified.' % presentation)
         with open(os.path.join(presentation_path, 'meta.html'), 'w') as fd:
             fd.write(
                 '<title>%s</title>\n<meta name="theme" content="%s" />\n' %
