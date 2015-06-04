@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 73 563 569" xml:space="preserve">
-  <g fill="#007BB8" opacity="0.3">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 73 563 569" xml:space="preserve" width="563px" height="569px">
+  <g fill="#007BB8" opacity="0.2">
     <polygon points="188.6,527.1 99.3,527.1 99.3,173.1 188.6,173.1 188.6,158.2 99.3,158.2 84.3,158.2 84.3,173.1 84.3,527.1 84.3,542.1 99.3,542.1 188.6,542.1"/>
     <polygon points="453.3,158.2 364,158.2 364,173.1 453.3,173.1 453.3,527.1 364,527.1 364,542.1 453.3,542.1 468.2,542.1 468.2,527.1 468.2,173.1 468.2,158.2"/>
     <path d="M275.4,284.6l57.8,137.7l-51.1-25.8l-6.7-3.4l-6.7,3.4l-51.1,25.8L275.4,284.6 M275.4,246L188,453.9 l87.3-44.1l87.3,44.1L275.4,246L275.4,246z"/>
