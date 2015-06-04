@@ -1,16 +1,16 @@
 body {
   background: #eee url(logo.svg) no-repeat bottom right;
-  border-top: 6px solid #007bb8;
+  border-top: 6px solid #5e8183;
   box-sizing: border-box;
-  font-family: "Open Sans", Verdana, Arial, sans-serif;
+  font-family: "Source Sans Pro", Verdana, Arial, sans-serif;
   font-size: 2em;
-  color: #1c1c1c;
+  color: #616161;
   text-align: left;
   font-weight: 300;
 }
 
 a {
-  color: #007bb8;
+  color: #5e8183;
 }
 
 *[contenteditable=true] {
@@ -18,7 +18,7 @@ a {
 }
 
 ::selection {
-  background: #007bb8;
+  background: #5e8183;
 }
 
 .reveal .progress {
@@ -26,15 +26,16 @@ a {
 }
 
 .reveal .progress span {
-  background: #007bb8;
+  background: #5e8183;
 }
 
 .reveal h1, .reveal h2 {
-  color: #007bb8;
+  color: #5e8183;
   margin: 0.3em;
 }
 
 .reveal h3 {
+  color: #f59129;
   margin: 0.3em;
 }
 
@@ -54,17 +55,17 @@ a {
 }
 
 .reveal .controls .navigate-left.enabled {
-  border-right-color: #007bb8;
+  border-right-color: #5e8183;
 }
 
 .reveal .controls .navigate-right.enabled {
-  border-left-color: #007bb8;
+  border-left-color: #5e8183;
 }
 
 .reveal .controls .navigate-top.enabled {
-  border-bottom-color: #007bb8;
+  border-bottom-color: #5e8183;
 }
 
 .reveal .controls .navigate-bottom.enabled {
-  border-top-color: #007bb8;
+  border-top-color: #5e8183;
 }
