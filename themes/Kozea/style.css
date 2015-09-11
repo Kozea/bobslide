@@ -1,16 +1,23 @@
-body {
+html {
   background: #eee url(logo.svg) no-repeat bottom right;
+}
+
+body {
   border-top: 6px solid #007bb8;
   box-sizing: border-box;
   font-family: "Open Sans", Verdana, Arial, sans-serif;
   font-size: 2em;
+  font-weight: 300;
   color: #1c1c1c;
   text-align: left;
-  font-weight: 300;
 }
 
 a {
   color: #007bb8;
+}
+
+li {
+  list-style: square;
 }
 
 *[contenteditable=true] {
@@ -67,4 +74,39 @@ a {
 
 .reveal .controls .navigate-bottom.enabled {
   border-top-color: #007bb8;
+}
+
+@media print {
+  @page {
+    margin: 0;
+    size: 40cm 30cm;
+  }
+
+  body {
+   background: rgba(240, 240, 240, 0.85);
+   border: none;
+  }
+
+  .slides {
+    font-size: 40pt !important;
+    line-height: 29cm !important;
+    position: static !important;
+  }
+
+  section {
+    display: inline-block !important;
+    position: static !important;
+    vertical-align: middle !important;
+  }
+
+  section:before {
+    background: #eee url(logo.svg) no-repeat bottom right;
+    border-top: 5mm solid #007bb8;
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 }
