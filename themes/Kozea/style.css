@@ -38,11 +38,15 @@ li {
 
 .reveal h1, .reveal h2 {
   color: #007bb8;
-  margin: 0.3em;
+  margin: 0.5em;
 }
 
 .reveal h3 {
-  margin: 0.3em;
+  margin: 0.5em;
+}
+
+.reveal p, .reveal ul, .reveal ol, .reveal dl {
+  margin: 1em 0;
 }
 
 .reveal .slide-number {
