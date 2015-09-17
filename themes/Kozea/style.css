@@ -38,11 +38,11 @@ body {
 
 .reveal h1, .reveal h2 {
   color: #007bb8;
-  margin: 0.5em;
+  margin: 0.5em 0;
 }
 
 .reveal h3 {
-  margin: 0.5em;
+  margin: 0.5em 0;
 }
 
 .reveal p {
@@ -102,8 +102,11 @@ body {
   }
 
   .slides {
+    box-sizing: border-box !important;
     font-size: 40pt !important;
     line-height: 29cm !important;
+    max-width: 40cm;
+    padding: 0 2em !important;
     position: static !important;
   }
 
