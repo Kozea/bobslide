@@ -12,20 +12,20 @@ body {
   text-align: left;
 }
 
-a {
-  color: #007bb8;
-}
-
-li {
-  list-style: square;
-}
-
 *[contenteditable=true] {
   outline: none;
 }
 
 ::selection {
   background: #007bb8;
+}
+
+.reveal a {
+  color: #007bb8;
+}
+
+.reveal li {
+  list-style: square;
 }
 
 .reveal .progress {
