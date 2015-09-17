@@ -46,7 +46,8 @@ li {
 }
 
 .reveal p, .reveal ul, .reveal ol, .reveal dl {
-  margin: 1em 0;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 .reveal .slide-number {
