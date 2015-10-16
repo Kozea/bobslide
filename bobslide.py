@@ -323,6 +323,15 @@ def presentation(action, index, presentation):
         return index
 
 
+@app.route('/presentation/pdf/<int:index>/<presentation>',
+           methods=['GET'])
+def pdf(index, presentation):
+    """Make a PDF from a presentation."""
+    from flask_weasyprint import render_pdf
+    return render_pdf(url_for(
+        'presentation', action='view', index=index, presentation=presentation))
+
+
 @app.route('/save/<int:index>/<presentation>', methods=['POST'])
 def save(index, presentation):
     """Save a presentation."""

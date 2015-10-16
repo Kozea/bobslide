@@ -127,3 +127,41 @@ body {
     width: 100%;
   }
 }
+
+@media print {
+  @page {
+    margin: 0;
+    size: 60cm 45cm;
+  }
+
+  body {
+    background: rgba(240, 240, 240, 0.85);
+    border: none;
+  }
+
+  .slides {
+    box-sizing: border-box !important;
+    font-size: 40pt !important;
+    line-height: 44cm !important;
+    max-width: 60cm;
+    padding: 0 5em !important;
+    position: static !important;
+  }
+
+  section {
+    display: inline-block !important;
+    position: static !important;
+    vertical-align: middle !important;
+  }
+
+  section:before {
+    background: #eee url(logo.svg) no-repeat bottom right;
+    border-top: 5mm solid #007bb8;
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}

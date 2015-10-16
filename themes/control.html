@@ -30,6 +30,7 @@
         <li><a data-char="⊟" href="#" id="remove">Remove</a></li>
         <li><a data-char="✑" href="{{ url_for('details', index=index, presentation=presentation) }}">Edit details</a></li>
         <li><a data-char="⇩" href="#" id="save">Save</a></li>
+        <li><a data-char="🗎" href="{{ url_for('pdf', index=index, presentation=presentation) }}">Download as PDF</a></li>
       {% endif %}
       <li><a data-char="⌂" href="{{ url_for('presentations') }}" id="close">Close</a></li>
     </ul>
