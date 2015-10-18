@@ -18,6 +18,7 @@ from operator import itemgetter
 from flask import (
     Flask, request, redirect, url_for, abort, render_template,
     render_template_string, flash, send_file)
+from flask_weasyprint import render_pdf
 
 
 app = Flask(__name__)
@@ -327,7 +328,6 @@ def presentation(action, index, presentation):
            methods=['GET'])
 def pdf(index, presentation):
     """Make a PDF from a presentation."""
-    from flask_weasyprint import render_pdf
     return render_pdf(url_for(
         'presentation', action='view', index=index, presentation=presentation))
 
