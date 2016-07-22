@@ -34,6 +34,7 @@ SECRET_KEY= 'secret_key_that_must_be_changed'
 app.config.from_object(__name__)
 app.config.from_pyfile(os.path.expanduser(
     os.path.join('~', '.config', 'bobslide')), silent=True)
+app.config.from_envvar('BOBSLIDE_SETTINGS', silent=True)
 
 # Turn relative paths into absolute for variables coming from the config file
 for key in ('PRESENTATIONS_PATHS', 'THEMES_PATHS'):
