@@ -16,7 +16,7 @@ from html.parser import HTMLParser
 from operator import itemgetter
 
 from flask import (
-    Flask, request, redirect, url_for, abort, render_template,
+    Flask, Markup, request, redirect, url_for, abort, render_template,
     render_template_string, flash, send_file)
 from flask_weasyprint import render_pdf
 
@@ -278,7 +278,7 @@ def presentation(action, index, presentation):
 
         with open(os.path.join(_THEMES_PATH, 'control.html'), 'r') as fd:
             control = render_template_string(
-                fd.read(), index=index, presentation=presentation,
+                Markup(fd.read()), index=index, presentation=presentation,
                 control=action, title=title, themes=list_themes(),
                 meta_theme=meta_theme)
 
@@ -299,16 +299,16 @@ def presentation(action, index, presentation):
         if action == 'edit':
             with open(os.path.join(_THEMES_PATH, 'section.js'), 'r') as fd:
                 configs.append(render_template_string(
-                    fd.read(), index=index, presentation=presentation))
+                    Markup(fd.read()), index=index, presentation=presentation))
 
     for path in (_THEMES_PATH, theme, presentation_path):
         if os.path.exists(os.path.join(path, 'conf.js')):
             with open(os.path.join(path, 'conf.js'), 'r') as fd:
                 configs.append(render_template_string(
-                    fd.read(), reveal_path=reveal_path))
+                    Markup(fd.read()), reveal_path=reveal_path))
 
     index = render_template_string(
-        layout, control=control, presentation_text=presentation_text,
+        Markup(layout), control=control, presentation_text=presentation_text,
         stylesheets=stylesheets, configs=configs, scripts=scripts,
         meta=meta)
 
