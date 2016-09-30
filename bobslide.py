@@ -277,10 +277,10 @@ def presentation(action, index, presentation):
                 path, 'reveal.js', 'js', 'reveal.min.js'))]
 
         with open(os.path.join(_THEMES_PATH, 'control.html'), 'r') as fd:
-            control = render_template_string(
+            control = Markup(render_template_string(
                 Markup(fd.read()), index=index, presentation=presentation,
                 control=action, title=title, themes=list_themes(),
-                meta_theme=meta_theme)
+                meta_theme=meta_theme))
 
         if os.path.exists(os.path.join(presentation_path, 'style.css')):
             stylesheets.append(url_for('presentations_path', path=os.path.join(
@@ -298,19 +298,20 @@ def presentation(action, index, presentation):
 
         if action == 'edit':
             with open(os.path.join(_THEMES_PATH, 'section.js'), 'r') as fd:
-                configs.append(render_template_string(
-                    Markup(fd.read()), index=index, presentation=presentation))
+                configs.append(Markup(render_template_string(
+                    Markup(fd.read()), index=index,
+                    presentation=presentation)))
 
     for path in (_THEMES_PATH, theme, presentation_path):
         if os.path.exists(os.path.join(path, 'conf.js')):
             with open(os.path.join(path, 'conf.js'), 'r') as fd:
-                configs.append(render_template_string(
-                    Markup(fd.read()), reveal_path=reveal_path))
+                configs.append(Markup(render_template_string(
+                    Markup(fd.read()), reveal_path=reveal_path)))
 
-    index = render_template_string(
+    index = Markup(render_template_string(
         Markup(layout), control=control, presentation_text=presentation_text,
         stylesheets=stylesheets, configs=configs, scripts=scripts,
-        meta=meta)
+        meta=meta))
 
     if action == 'export':
         with open(os.path.join(dir_temp, 'index.html'), 'w') as fd:
