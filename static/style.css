@@ -129,6 +129,7 @@ body main section ul {
 
 body main section ul li {
   display: inline;
+  font-size: 0;
 }
 
 body main section ul li a {
@@ -138,10 +139,10 @@ body main section ul li a {
 body main section ul li a:after {
   color: #fff;
   content: attr(data-char);
-  font-size: 2em;
-  height: 1em;
-  padding: 0.5em;
-  width: 1em;
+  font-size: 2rem;
+  height: 1rem;
+  padding: 0.5rem;
+  width: 1rem;
 }
 
 body main section ul li:hover a:after {
