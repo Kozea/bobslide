@@ -16,8 +16,8 @@ from html.parser import HTMLParser
 from operator import itemgetter
 
 from flask import (
-    Flask, Markup, request, redirect, url_for, abort, render_template,
-    render_template_string, flash, send_file)
+    Flask, Markup, abort, flash, redirect, render_template,
+    render_template_string, request, send_file, url_for)
 from flask_weasyprint import render_pdf
 
 
@@ -28,7 +28,7 @@ _THEMES_PATH = os.path.join(app.config.root_path, 'themes')
 DEBUG = False
 PRESENTATIONS_PATHS = [os.path.join(app.config.root_path, 'presentations')]
 THEMES_PATHS = [_THEMES_PATH]
-SECRET_KEY= 'secret_key_that_must_be_changed'
+SECRET_KEY = 'secret_key_that_must_be_changed'
 
 
 app.config.from_object(__name__)
@@ -126,8 +126,11 @@ def list_presentations():
     """Return a list of presentations"""
     presentations = []
     for index, path in enumerate(app.config['PRESENTATIONS_PATHS']):
-        for presentation in os.listdir(path):
-            presentations.append((index, presentation))
+        try:
+            for presentation in os.listdir(path):
+                presentations.append((index, presentation))
+        except OSError:
+            pass
     return sorted(presentations, key=itemgetter(1))
 
 
@@ -387,6 +390,7 @@ def details(index, presentation):
         'details.html', presentation=presentation, contents=contents,
         style_css=style_css, conf_js=conf_js, themes=themes,
         meta_theme=meta_theme)
+
 
 if __name__ == '__main__':
     app.run()  # pragma: no cover

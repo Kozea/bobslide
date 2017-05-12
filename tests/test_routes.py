@@ -1,5 +1,5 @@
-import pytest
 import os
+
 import bobslide
 
 
@@ -38,6 +38,7 @@ def test_create_presentation(test_app):
     assert 'Rose' in html
     assert 'Create' in html
 
+
 def test_delete_presentation(test_app):
     """Test the deleting of a presentation."""
     form = {'validation': 'yes'}
@@ -47,6 +48,7 @@ def test_delete_presentation(test_app):
     assert 'Bonbons' in html
 
     html = test_app.get('/delete/0/Bonbons').data.decode('utf-8')
+
 
 def test_themes_path(test_app):
     """Test sends files from themes folder."""
@@ -69,7 +71,9 @@ def test_presentations_path(test_app):
 def test_view_presentation(test_app):
     """Test the view of a presentation."""
     for index, presentation in bobslide.list_presentations():
-        html = test_app.get('/presentation/view/%d/%s' % (index, presentation)).data.decode('utf-8')
+        html = test_app.get(
+            '/presentation/view/%d/%s' % (index, presentation))
+        html = html.data.decode('utf-8')
         assert '<h1>%s</h1>' % presentation in html
         assert 'Close' in html
         assert 'Ordered' not in html
@@ -97,17 +101,18 @@ def test_save_presentation(test_app):
     """Test the backup of a presentation."""
     form = {'sections': '<section><h1>Bonbons</h1></section>'}
     test_app.post('/save/0/Bonbons', data=form)
-    with open(os.path.join(
+    presentation_path = os.path.join(
         bobslide.app.config['PRESENTATIONS_PATHS'][0], 'Bonbons',
-            'presentation.html'), 'r') as fd :
-            html = fd.read()
+        'presentation.html')
+    with open(presentation_path, 'r') as fd:
+        html = fd.read()
     assert '<h1>Bonbons</h1>' in html
     assert 'Bulles' not in html
     assert '<p>bonbons!</p>' not in html
 
 
 def test_details_presentation(test_app):
-    """Test the edition of name, theme, contents, script and css of a presentation."""
+    """Test the edition of details of a presentation."""
     with open(os.path.join(
         bobslide.app.config['PRESENTATIONS_PATHS'][0], 'Bonbons',
             'presentation.html'), 'r') as fd:
