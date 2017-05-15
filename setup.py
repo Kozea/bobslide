@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from setuptools import find_packages, setup
 
 tests_requirements = [
@@ -14,11 +16,11 @@ setup(
     author="Kozea",
     packages=find_packages(),
     include_package_data=True,
-    scripts=['bobslide.py'],
     install_requires=[
         'Flask',
         'Flask-WeasyPrint',
     ],
-    tests_requires=tests_requirements,
+    setup_requires=['pytest-runner'],
+    tests_require=tests_requirements,
     extras_require={'test': tests_requirements}
 )

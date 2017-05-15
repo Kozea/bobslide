@@ -18,11 +18,11 @@ clean-install: clean
 	rm -fr *.egg-info
 
 lint:
-	$(PYTEST) --no-cov --flake8 -m flake8 $(PROJECT_NAME).py
-	$(PYTEST) --no-cov --isort -m isort $(PROJECT_NAME).py
+	$(PYTEST) $(PYTEST_ARGS) --flake8 -m flake8 $(PROJECT_NAME).py tests
+	$(PYTEST) $(PYTEST_ARGS) --isort -m isort $(PROJECT_NAME).py tests
 
 check-python:
-	$(PYTEST) tests
+	$(PYTEST) $(PYTEST_ARGS) --cov $(PROJECT_NAME) --cov tests
 
 check-outdated:
 	$(PIP) list --outdated --format=columns
