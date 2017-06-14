@@ -5,7 +5,6 @@ import pytest
 
 from bobslide import app
 
-
 test_app = pytest.fixture(lambda: app.test_client())
 
 
