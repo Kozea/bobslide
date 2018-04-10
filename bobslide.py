@@ -15,11 +15,9 @@ import tempfile
 from html.parser import HTMLParser
 from operator import itemgetter
 
-from flask import (
-    Flask, Markup, abort, flash, redirect, render_template,
-    render_template_string, request, send_file, url_for)
+from flask import (Flask, Markup, abort, flash, redirect, render_template,
+                   render_template_string, request, send_file, url_for)
 from flask_weasyprint import render_pdf
-
 
 app = Flask(__name__)
 
