@@ -40,10 +40,12 @@ body {
 
 .reveal h1, .reveal h2 {
   color: #007bb8;
+  hyphens: none;
   margin: 0.5em 0;
 }
 
 .reveal h3 {
+  hyphens: none;
   margin: 0.5em 0;
 }
 
