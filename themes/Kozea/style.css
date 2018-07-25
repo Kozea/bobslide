@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,700,700i');
+
 html {
   background: #eee url(logo.svg) no-repeat bottom right;
 }
@@ -24,7 +26,7 @@ body {
   color: #007bb8;
 }
 
-.reveal li {
+.reveal ul li {
   list-style: square;
 }
 
@@ -38,10 +40,12 @@ body {
 
 .reveal h1, .reveal h2 {
   color: #007bb8;
+  hyphens: none;
   margin: 0.5em 0;
 }
 
 .reveal h3 {
+  hyphens: none;
   margin: 0.5em 0;
 }
 
