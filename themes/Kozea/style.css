@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Hind:300,500');
+
 
 html {
-  background: #eee url(logo.svg) no-repeat bottom right;
+  background: #F9F9F9 url(logo.svg) no-repeat bottom right;
 }
 
 body {
-  border-top: 6px solid #007bb8;
+  border-top: 6px solid #1A2531;
   box-sizing: border-box;
-  font-family: "Open Sans", Verdana, Arial, sans-serif;
+  font-family: "Hind", Verdana, Arial, sans-serif;
   font-size: 2em;
   font-weight: 300;
-  color: #1c1c1c;
+  color: #1C1C1C;
   text-align: left;
 }
 
@@ -19,11 +20,15 @@ body {
 }
 
 ::selection {
-  background: #007bb8;
+  background: #1A2531;
 }
 
 .reveal a {
-  color: #007bb8;
+  color: #1A2531;
+}
+
+.reveal b, .reveal strong {
+  font-weight: 500;
 }
 
 .reveal ul li {
@@ -35,11 +40,12 @@ body {
 }
 
 .reveal .progress span {
-  background: #007bb8;
+  background: #1A2531;
 }
 
 .reveal h1, .reveal h2 {
-  color: #007bb8;
+  color: #1A2531;
+  font-weight: 500;
   hyphens: none;
   margin: 0.5em 0;
 }
@@ -65,8 +71,8 @@ body {
 
 .reveal .slide-number {
   font-size: 1em;
-  font-weight: bold;
-  color: black;
+  font-weight: 500;
+  color: #1A2531;
 }
 
 .reveal .controls {
@@ -79,19 +85,19 @@ body {
 }
 
 .reveal .controls .navigate-left.enabled {
-  border-right-color: #007bb8;
+  border-right-color: #1A2531;
 }
 
 .reveal .controls .navigate-right.enabled {
-  border-left-color: #007bb8;
+  border-left-color: #1A2531;
 }
 
 .reveal .controls .navigate-top.enabled {
-  border-bottom-color: #007bb8;
+  border-bottom-color: #1A2531;
 }
 
 .reveal .controls .navigate-bottom.enabled {
-  border-top-color: #007bb8;
+  border-top-color: #1A2531;
 }
 
 @page {
@@ -101,7 +107,7 @@ body {
 
 @media print {
   body {
-    background: rgba(240, 240, 240, 0.85);
+    background: #F9F9F9 url(logo.svg) no-repeat bottom right;
     border: none;
   }
 
@@ -121,8 +127,7 @@ body {
   }
 
   section:before {
-    background: #eee url(logo.svg) no-repeat bottom right;
-    border-top: 5mm solid #007bb8;
+    border-top: 5mm solid #1A2531;
     content: '';
     display: block;
     left: 0;
