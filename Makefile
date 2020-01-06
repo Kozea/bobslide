@@ -21,7 +21,7 @@ all: install serve
 	$(LOG)
 
 install:
-	test -d $(VENV) || virtualenv $(VENV)
+	test -d $(VENV) || python -m venv $(VENV)
 	$(PIP) install --upgrade --no-cache pip setuptools -e .[test]
 	$(GIT) submodule init
 	$(GIT) submodule update
