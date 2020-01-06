@@ -116,7 +116,7 @@ def test_details_presentation(test_app):
     with open(os.path.join(
         bobslide.app.config['PRESENTATIONS_PATHS'][0], 'Bonbons',
             'presentation.html'), 'r') as fd:
-            contents = fd.read()
+        contents = fd.read()
     form = {
         'title': 'Haribo',
         'theme': '0/Rose',
